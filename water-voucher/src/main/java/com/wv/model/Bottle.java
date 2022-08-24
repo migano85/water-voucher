@@ -7,14 +7,10 @@ import lombok.ToString;
 
 @Data
 @ToString(doNotUseGetters = true)
-public class OrderBottle {
+public class Bottle {
 
-	//this is for bottle inside a single order
-	private Long orderId;
 	private Long bottleId;
-	private String voucherNo;
-	private Date deliveryDate;
-	private Date bottleReturnDate;
+	private Double size; //in little
 	private Date createdAt;
 	private Date modifiedAt; //(changed automatically on every record change) will be used for optimistic locking
 	private Long createUserId;
