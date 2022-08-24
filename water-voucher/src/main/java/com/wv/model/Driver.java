@@ -8,13 +8,12 @@ import lombok.ToString;
 
 @Data
 @ToString(doNotUseGetters = true)
-public class Bottle {
+public class Driver {
 
-	private Long bottleId;
-	private Double size; //in little
-	private String serialNo;
-	private boolean full;
-	private List<OrderBottle> bottleOrdersList; //(History:maximum 1 has deliveryDate=null)
+	private Long driverId;
+	private String firstName;
+	private String lastName;
+	private List<Order> assignedOrdersList;
 	private Date createdAt;
 	private Date modifiedAt; //(changed automatically on every record change) will be used for optimistic locking
 	private Long createUserId;
