@@ -1,9 +1,14 @@
 package com.wv.repositories;
 
+import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.wv.model.Book;
 import com.wv.model.Customer;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +34,27 @@ public class CustomerRepoJdbcImpl implements CustomerRepo{
 	}
 
 	@Override
-	public Long count() {
+	public int count() {
 		log.info("start counting customers");
-		return jdbcTemplate.queryForObject("select count(*) from customers", Long.class);
+		return jdbcTemplate.queryForObject("select count(*) from customers", Integer.class);
+	}
+
+	@Override
+	public Optional<Customer> get(Long id) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+
+	@Override
+	public Collection<Customer> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Book> findCustomerBooks(Long customerId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

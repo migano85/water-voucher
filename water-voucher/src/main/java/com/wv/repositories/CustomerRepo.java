@@ -1,9 +1,11 @@
 package com.wv.repositories;
 
+import java.util.Set;
+
+import com.wv.model.Book;
 import com.wv.model.Customer;
 
-public interface CustomerRepo {
+public interface CustomerRepo extends GlobalRepo<Customer>{
 
-	public int save(Customer customer);
-	public Long count();
+	public Set<Book> findCustomerBooks(Long customerId);
 }

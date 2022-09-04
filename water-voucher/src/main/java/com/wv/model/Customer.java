@@ -1,7 +1,8 @@
 package com.wv.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -16,8 +17,8 @@ public class Customer {
 	private List<Address> addressesList;
 	//private List<Order> ordersList;
 	private List<Book> booksList;
-	private Date createdAt;
-	private Date modifiedAt; //(changed automatically on every record change) will be used for optimistic locking
-	private Long createUserId;
-	private Long modifyUserId;
+	private LocalDateTime createdAt;
+	private LocalDateTime modifiedAt; //(changed automatically on every record change) will be used for optimistic locking
+	private String createUserId;
+	private String modifyUserId;
 }

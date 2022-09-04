@@ -8,14 +8,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.wv.repositories.CustomerRepoJdbcImpl;
+import com.wv.repositories.CustomerRepoJooqImpl;
 
 @SpringBootApplication
+//@ComponentScan("ANOTHER base package") if we want to scan for components in different base package
 public class WaterVoucherApplication implements CommandLineRunner{
 
 	private static final Logger log = LoggerFactory.getLogger(WaterVoucherApplication.class);
 	
 	@Autowired
-	private CustomerRepoJdbcImpl customerRepo;
+	private CustomerRepoJdbcImpl customerRepoJdbcImpl;
+	
+	@Autowired
+	private CustomerRepoJooqImpl customerRepoJooqImpl;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(WaterVoucherApplication.class, args);
@@ -24,7 +29,10 @@ public class WaterVoucherApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		log.info("***********");
-		log.info(customerRepo.count() + "");
+		log.info(customerRepoJdbcImpl.count() + "");
+		log.info("***********");
+		log.info("***********");
+		log.info(customerRepoJooqImpl.count() + "");
 		log.info("***********");
 		
 	}
