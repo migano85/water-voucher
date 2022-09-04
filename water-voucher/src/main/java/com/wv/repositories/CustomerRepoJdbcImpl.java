@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import com.wv.model.Customer;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class CustomerRepoJdbcImpl implements CustomerRepo{
 
@@ -20,12 +23,14 @@ public class CustomerRepoJdbcImpl implements CustomerRepo{
 	
 	@Override
 	public int save(Customer customer) {
+		log.info("start saving customer" + customer.getCustomerId());
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public Long count() {
+		log.info("start counting customers");
 		return jdbcTemplate.queryForObject("select count(*) from customers", Long.class);
 	}
 
