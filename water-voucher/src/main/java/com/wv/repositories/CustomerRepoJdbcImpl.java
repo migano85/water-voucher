@@ -28,7 +28,7 @@ public class CustomerRepoJdbcImpl implements CustomerRepo{
 	
 	@Override
 	public int save(Customer customer) {
-		log.info("start saving customer" + customer.getCustomerId());
+//		log.info("start saving customer" + customer.getCustomerId());
 		// TODO Auto-generated method stub
 		return 0;
 	}

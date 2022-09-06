@@ -16,6 +16,7 @@
 	<description>voucher app for water distributors</description>
 	<properties>
 		<java.version>17</java.version>
+		<jooq.version>3.17.3</jooq.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -60,6 +61,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jooq</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.simpleflatmapper/sfm-jdbc -->
+		<dependency>
+		    <groupId>org.simpleflatmapper</groupId>
+		    <artifactId>sfm-jdbc</artifactId>
+		    <version>8.2.3</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

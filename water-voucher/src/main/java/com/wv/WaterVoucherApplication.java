@@ -28,11 +28,13 @@ public class WaterVoucherApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		log.info("***********");
-		log.info(customerRepoJdbcImpl.count() + "");
-		log.info("***********");
+//		log.info("***********");
+//		log.info(customerRepoJdbcImpl.count() + "");
+//		log.info("***********");
 		log.info("***********");
 		log.info(customerRepoJooqImpl.count() + "");
+		log.info("***********");
+		log.info(customerRepoJooqImpl.getAllCustomers() + "");
 		log.info("***********");
 		
 	}

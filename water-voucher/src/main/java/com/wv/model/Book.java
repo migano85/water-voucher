@@ -4,10 +4,14 @@
 import java.util.Date;
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString(doNotUseGetters = true)
 public class Book {
 
