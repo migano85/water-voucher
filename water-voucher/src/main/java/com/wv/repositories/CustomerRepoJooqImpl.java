@@ -72,7 +72,12 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 						.from(Tables.BOOKS)
 						.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.BOOKS.CUSTOMER_ID)).fetch();
 						*/
-		dslContext.select(
+		
+		//*******
+		// var keyword was introduced in java 10
+		// record class in java 14
+		//*******
+		var d = dslContext.select(
 				Tables.CUSTOMERS.CUSTOMER_ID,
 				Tables.CUSTOMERS.FIRST_NAME,
 				select(
@@ -82,7 +87,8 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 				)
 			   .from(Tables.CUSTOMERS)
 			   .fetch();
-		//System.out.println(d.toString());
+		System.out.println(d);
+		
 		 return null;
 	}
 	
