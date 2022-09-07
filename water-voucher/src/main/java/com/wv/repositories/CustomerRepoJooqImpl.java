@@ -87,6 +87,32 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 				)
 			   .from(Tables.CUSTOMERS)
 			   .fetch();
+		
+		System.out.println(d);
+		
+		 return null;
+	}
+	
+	/*this method directly convert select result to be called directly by REST controller no need to Model object that will again be converted to JSON
+	* we need to call formatJSON() after fetching the result
+	*/
+	public Collection<Customer> getAllCustomersJson() {
+		
+		//*******
+		// var keyword was introduced in java 10
+		// record class in java 14
+		//*******
+		var d = dslContext.select(
+				Tables.CUSTOMERS.CUSTOMER_ID,
+				Tables.CUSTOMERS.FIRST_NAME,
+				select(
+				groupConcat(Tables.BOOKS.NUMBER_OF_PAGES).as("bibi"))
+				.from(Tables.BOOKS)
+				.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID)).asField()
+				)
+			   .from(Tables.CUSTOMERS)
+			   .fetch().formatJSON();
+		
 		System.out.println(d);
 		
 		 return null;
