@@ -38,6 +38,8 @@ public class TestStreams {
 		Consumer<String> consumerStr = s->{System.out.print(s); System.out.print(" - ");}; //accept method of consumer just takes one argument execute some code and return nothing
 		big5StreamSuppier.get().forEach(consumerStr);
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%");
+		
+		big5StreamSuppier.get().map(null);
 		//------------------------------------------
 		Supplier<String> strSupplier = ()->"ee";
 		System.out.println(strSupplier.get());
