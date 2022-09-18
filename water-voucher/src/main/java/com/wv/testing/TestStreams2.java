@@ -22,7 +22,7 @@ public class TestStreams2 {
 //		Stream.iterate(1, n -> n + 2)
 //		.peek(x -> System.out.println("peeking " + x))  it will not modify the data of the stream like map
 //        .limit(5)
-//        .peek(x -> System.out.println("peeking again " + x))
+//        .peek(x -> System.out.println("peeking again " + x)) peek creates new stream copy of the original, that's why it will not change data unless they are reference Object, like the above example
 //        .forEach(x -> System.out.println(x));
 		
 //		Stream.iterate("mahmoud", n->"mourad")
