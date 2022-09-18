@@ -36,13 +36,14 @@ public class TestStreams2 {
 //		.forEach(System.out::println);//this will print upper case
 //		String str = "gigo"; str.toUpperCase();
 		//--------------------------------------------
-		Stream.of(3,6,7,9)
-		.map(Integer::doubleValue)//map transform data in stream, here we use the class to calls instance methods (doubleValue not static method)
-		.limit(4)
-		.map(Double::longValue)//because first map converted integer to double, now we have to call methods of double instance
-		.forEach(System.out::println);//this will print upper case
+//		Stream.of(3,6,7,9)
+//		.map(Integer::doubleValue)//map transform data in stream, here we use the class to calls instance methods (doubleValue not static method)
+//		.limit(4)
+//		.map(Double::longValue)//because first map converted integer to double, now we have to call methods of double instance
+//		.forEach(System.out::println);//this will print upper case
 		
 //		Integer x = 5; x.doubleValue();
+		
 		//*************************************************************
 //		Stream.iterate(new int[]{0, 1}, n -> new int[]{n[1], n[0] + n[1]})
 //		.limit(10)
@@ -64,6 +65,21 @@ public class TestStreams2 {
 //			System.out.println(n);
 //		}
 		
+		//________________________________________________________
+		double sum = Stream.iterate(new int[]{0, 1}, n -> new int[]{n[1], n[0] + n[1]})
+		.limit(10)
+		.map(n -> n[0]) //transform array element value to value, transform the result from Stream<int[]> to Stream<Integer>
+		.mapToDouble(n->n)
+		.sum();
+		
+		System.out.println(sum);
+		
+		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		// The stream.iterate was enhanced in Java 9. It supports a predicate (condition) as second argument, and the stream.iterate will stop if the predicate is false.
+		Stream.iterate(1, n -> n < 10 , n -> n * 2)
+		.limit(3)
+        .forEach(x -> System.out.println(x));
+		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	}
 
 }
