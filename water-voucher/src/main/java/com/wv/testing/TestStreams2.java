@@ -1,5 +1,6 @@
 package com.wv.testing;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class TestStreams2 {
@@ -66,20 +67,28 @@ public class TestStreams2 {
 //		}
 		
 		//________________________________________________________
-		double sum = Stream.iterate(new int[]{0, 1}, n -> new int[]{n[1], n[0] + n[1]})
-		.limit(10)
-		.map(n -> n[0]) //transform array element value to value, transform the result from Stream<int[]> to Stream<Integer>
-		.mapToDouble(n->n)
-		.sum();
+//		double sum = Stream.iterate(new int[]{0, 1}, n -> new int[]{n[1], n[0] + n[1]})
+//		.limit(10)
+//		.map(n -> n[0]) //transform array element value to value, transform the result from Stream<int[]> to Stream<Integer>
+//		.mapToDouble(n->n)
+//		.sum();
+//		
+//		System.out.println(sum);
 		
-		System.out.println(sum);
-		
-		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		//%%%%%%%% JAVA 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		// The stream.iterate was enhanced in Java 9. It supports a predicate (condition) as second argument, and the stream.iterate will stop if the predicate is false.
-		Stream.iterate(1, n -> n < 10 , n -> n * 2)
-		.limit(3)
-        .forEach(x -> System.out.println(x));
+//		Stream.iterate(1, n -> n < 10 , n -> n * 2)
+//		.limit(3)
+//        .forEach(x -> System.out.println(x));
 		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+		Integer x = Stream.iterate(4, multipleOfFour -> multipleOfFour + 4)
+		.limit(10)
+		.map(multipleOfFour -> multipleOfFour * multipleOfFour)
+		.filter(multipleOfFourSquared -> multipleOfFourSquared % 10 == 0)
+		.reduce(0, Integer::sum);
+		
+		System.out.println(x);
 	}
 
 }

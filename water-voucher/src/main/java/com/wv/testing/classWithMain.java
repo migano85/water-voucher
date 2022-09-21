@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
-import test.User;
+import test.UserTest;
 
 public class classWithMain{
 	
@@ -14,8 +14,8 @@ public class classWithMain{
 //		String first = "first";
 //		String second = "Second";
 
-		Comparator<User> compUser = (u1,u2)->u1.getAge().compareTo(u2.getAge());
-		ArrayList<User> list = new ArrayList<>(); list.add(new User(9L,78)); list.add(new User(4L,55)); list.add(new User(3L,44)); list.add(new User(2L,22));
+		Comparator<UserTest> compUser = (u1,u2)->u1.getAge().compareTo(u2.getAge());
+		ArrayList<UserTest> list = new ArrayList<>(); list.add(new UserTest(9L,78)); list.add(new UserTest(4L,55)); list.add(new UserTest(3L,44)); list.add(new UserTest(2L,22));
 		System.out.println(list); list.sort(compUser); System.out.println(list);
 		
 //		Comparator<String> compExample1 = (first, second)->Integer.compare(first.length(), second.length());

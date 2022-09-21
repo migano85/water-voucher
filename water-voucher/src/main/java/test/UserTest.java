@@ -1,25 +1,20 @@
 package test;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.ToString;
 
 @AllArgsConstructor
 @ToString
-public class User {
+@Data
+public class UserTest {
 
 	private Long userId;
 	private Integer age;
+	private String email;
 	
-	public Long getUserId() {
-		return userId;
-	}
-	public void setUserId(Long userId) {
+	public UserTest(Long userId, Integer age) {
 		this.userId = userId;
-	}
-	public Integer getAge() {
-		return age;
-	}
-	public void setAge(Integer age) {
 		this.age = age;
 	}
 }
