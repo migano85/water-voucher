@@ -9,6 +9,10 @@ import java.util.stream.Stream;
 import test.UserTest;
 
 public class TestingMapAndFlatMap {
+	/*************************************
+	7777777 LAZY EVALUATION of streams is very important topic, read this article: https://stackify.com/streams-guide-java-8/
+	*************************************
+	*/
 
 	public static void main(String[] args) {
 //		ArrayList<String> fruit = new ArrayList<>();
