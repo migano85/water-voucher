@@ -1,8 +1,8 @@
 package com.wv.repositories;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 //import org.jooq.DSLContext;
 //import org.jooq.Records;
 import org.jooq.*;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.wv.jooq.model.Tables;
 import com.wv.jooq.model.tables.pojos.Books;
 import com.wv.jooq.model.tables.pojos.Customers;
+import com.wv.jooq.model.tables.records.BooksRecord;
 import com.wv.model.Book;
 import com.wv.model.Customer;
 
@@ -64,35 +65,52 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 		 //return null;
 	}
 	
-	public Collection<Customer> getAllCustomers() {
+	public Collection<Customer> getAllCustomersWitNumberOfPagesAsList() {
 		
-		//Result<Record1<String>> d = 
-				/*dslContext.select(
-						groupConcat(Tables.BOOKS.NUMBER_OF_PAGES).as("bibi"))
-						.from(Tables.BOOKS)
-						.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.BOOKS.CUSTOMER_ID)).fetch();
-						*/
-		
-		//*******
-		// var keyword was introduced in java 10
-		// record class in java 14
-		//*******
-		var d = dslContext.select(
+//		Result<Record3<Long, String, Result<Record1<String>>>> d = //this assignment will be correct if we remove .asMultiset().convertFrom(r -> r.map(Record1::value1))
+		Result<Record3<Long, String, List<Long>>> d =
+				dslContext.select(
 				Tables.CUSTOMERS.CUSTOMER_ID,
 				Tables.CUSTOMERS.FIRST_NAME,
-				select(
-				groupConcat(Tables.BOOKS.NUMBER_OF_PAGES).as("bibi"))
+				select
+//				(Tables.BOOKS)
+				(Tables.BOOKS.NUMBER_OF_PAGES)
+//				(groupConcat(Tables.BOOKS.NUMBER_OF_PAGES).as("bibi"))
 				.from(Tables.BOOKS)
-				.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID)).asField()
+				.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID)).asMultiset().convertFrom(r -> r.map(Record1::value1))
 				)
 			   .from(Tables.CUSTOMERS)
 			   .fetch();
 		
-		System.out.println(d);
+//		System.out.println(d);
 		
 		 return null;
 	}
+
 	
+	public Collection<Customer> getAllCustomers() {
+		
+//		Result<Record3<Long, String, Result<Record1<String>>>> d = //this assignment will be correct if we remove .asMultiset().convertFrom(r -> r.map(Record1::value1))
+//		Result<Record3<Long, String, List<Long>>> d =
+		List<Customer> cust =
+				dslContext.select(
+						Tables.CUSTOMERS.asterisk() ,
+	//				Tables.CUSTOMERS.CUSTOMER_ID,
+	//				Tables.CUSTOMERS.FIRST_NAME,
+					select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
+					.from(Tables.BOOKS)
+					.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID)).asMultiset().convertFrom(r -> r.map(Records.mapping(Book::new)))
+	
+				)
+			   .from(Tables.CUSTOMERS)
+			   .fetch(Records.mapping(Customer::new));
+		
+		
+		System.out.println("&&&&&&&&&&&");
+		System.out.println(cust);
+		
+		 return null;
+	}
 	/*this method directly convert select result to be called directly by REST controller no need to Model object that will again be converted to JSON
 	* we need to call formatJSON() after fetching the result
 	*/
@@ -117,24 +135,7 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 		
 		 return null;
 	}
-	
-//	public Collection<Customer> getAllCustomers() {
-//		 //return dslContext.selectFrom(Tables.CUSTOMERS).fetchInto(Customer.class);
-////		Result<Record3<Long,String,Result<Record2<Long,Long>>>> d =
-//		Result<Record3<Long,String, Long>> d= 
-//		dslContext.select(
-//				Tables.CUSTOMERS.CUSTOMER_ID,
-//				Tables.CUSTOMERS.FIRST_NAME,
-//				Tables.BOOKS.NUMBER_OF_PAGES
-//				)
-//			   .from(Tables.CUSTOMERS)
-//			   .join(Tables.BOOKS).on(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID))
-//			   .fetch();
-////		System.out.println(d.toString());
-//		 return null;
-//	}
 
-	
 	@Override
 	public Set<Book> findCustomerBooks(Long customerId) {
 		// TODO Auto-generated method stub
