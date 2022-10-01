@@ -97,8 +97,11 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 						Tables.CUSTOMERS.CUSTOMER_ID
 						,Tables.CUSTOMERS.FIRST_NAME
 						,Tables.CUSTOMERS.LAST_NAME
-	//				Tables.CUSTOMERS.CUSTOMER_ID,
-	//				Tables.CUSTOMERS.FIRST_NAME,
+						,Tables.CUSTOMERS.PHONE_NO
+						,Tables.CUSTOMERS.CREATED_AT
+						,Tables.CUSTOMERS.MODIFIED_AT
+						,Tables.CUSTOMERS.CREATE_USER_ID
+						,Tables.CUSTOMERS.MODIFY_USER_ID
 					,select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
 					.from(Tables.BOOKS)
 					.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID))
@@ -110,9 +113,9 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 				)
 			   .from(Tables.CUSTOMERS)
 			   //using method reference
-//			   .fetch(Records.mapping(Customer::new));
+			   .fetch(Records.mapping(Customer::new));
 			   //using lambda
-			   .fetch(currentRecord->new Customer(currentRecord.component1(),currentRecord.component2(),currentRecord.component3(),currentRecord.component4()));
+//			   .fetch(currentRecord->new Customer(currentRecord.component1(), currentRecord.component2(), currentRecord.component3(), currentRecord.component4(), currentRecord.component5(), currentRecord.component6()));
 			   //using old way
 //			   .fetch(new RecordMapper<Record4<Long, String, String, List<Book>>,Customer>(){
 //				   @Override
