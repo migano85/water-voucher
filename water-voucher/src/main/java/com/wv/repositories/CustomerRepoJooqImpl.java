@@ -94,16 +94,20 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 //		Result<Record3<Long, String, List<Long>>> d =
 		List<Customer> cust =
 				dslContext.select(
-						Tables.CUSTOMERS.asterisk() ,
+						Tables.CUSTOMERS.CUSTOMER_ID
+						,Tables.CUSTOMERS.FIRST_NAME
+						,Tables.CUSTOMERS.LAST_NAME
 	//				Tables.CUSTOMERS.CUSTOMER_ID,
 	//				Tables.CUSTOMERS.FIRST_NAME,
-					select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
+					,select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
 					.from(Tables.BOOKS)
 					.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID)).asMultiset().convertFrom(r -> r.map(Records.mapping(Book::new)))
 	
 				)
 			   .from(Tables.CUSTOMERS)
+//			   .fetch();
 			   .fetch(Records.mapping(Customer::new));
+//			   .fetch(t -> t.map(Records.mapping(Customer::new)))
 		
 		
 		System.out.println("&&&&&&&&&&&");

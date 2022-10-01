@@ -12,13 +12,14 @@ public record Customer(
 		 Long customerId,
 		 String firstName,
 		 String lastName,
-		 Long phoneNo,
+//		 Long phoneNo,
 //		 List<Address> addressesList,
-		 List<Book> booksList,
-		 LocalDateTime createdAt,
-		 LocalDateTime modifiedAt,
-		 String createUserId,
-		 String modifyUserId){
+		 List<Book> books
+//		 LocalDateTime createdAt,
+//		 LocalDateTime modifiedAt,
+//		 String createUserId,
+//		 String modifyUserId
+		 ){
 	
 }
 
