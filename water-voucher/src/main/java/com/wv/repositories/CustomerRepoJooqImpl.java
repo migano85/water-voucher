@@ -91,8 +91,8 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 	public Collection<Customer> getAllCustomers() {
 		
 //		Result<Record3<Long, String, Result<Record1<String>>>> d = //this assignment will be correct if we remove .asMultiset().convertFrom(r -> r.map(Record1::value1))
-//		Result<Record3<Long, String, List<Long>>> d =
-		List<Customer> cust =
+//		Result<Record3<Long, String, List<Long>>> d = //this assignment will be correct if we use fetch() instead of .fetch(Records.mapping(Customer::new));
+		List<Customer> customerList =
 				dslContext.select(
 						Tables.CUSTOMERS.CUSTOMER_ID
 						,Tables.CUSTOMERS.FIRST_NAME
@@ -105,15 +105,20 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 	
 				)
 			   .from(Tables.CUSTOMERS)
-//			   .fetch();
-			   .fetch(Records.mapping(Customer::new));
-//			   .fetch(t -> t.map(Records.mapping(Customer::new)))
+			   //using method reference
+//			   .fetch(Records.mapping(Customer::new));
+			   //using lambda
+			   .fetch(currentRecord->new Customer(currentRecord.component1(),currentRecord.component2(),currentRecord.component3(),currentRecord.component4()));
+			   //using old way
+//			   .fetch(new RecordMapper<Record4<Long, String, String, List<Book>>,Customer>(){
+//				   @Override
+//				   public Customer map(Record4<Long, String, String, List<Book>> currentRecord) {
+//					   return new Customer(currentRecord.component1(), currentRecord.component2(), currentRecord.component3(), currentRecord.component4());
+//				   }
+//			   });
 		
 		
-		System.out.println("&&&&&&&&&&&");
-		System.out.println(cust);
-		
-		 return null;
+		return customerList;
 	}
 	/*this method directly convert select result to be called directly by REST controller no need to Model object that will again be converted to JSON
 	* we need to call formatJSON() after fetching the result
