@@ -27,25 +27,15 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 	@Autowired
     private DSLContext dslContext;
 	
-//	@Override
-//	public int save(Customer customer) {
-//		log.info("start saving customers using jooq");
-//		return dslContext.insertInto(Tables.CUSTOMERS, 
-//			Tables.CUSTOMERS.CUSTOMER_ID, Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
-//			.values(customer.getCustomerId(), customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateUserId(), customer.getModifiedAt(), customer.getModifyUserId())
-//			.execute() ;
-//	}
-	
 	@Override
 	public int save(Customer customer) {
 		log.info("start saving customers using jooq");
-		return 0;
-//		return dslContext.insertInto(Tables.CUSTOMERS, 
-//			Tables.CUSTOMERS.CUSTOMER_ID, Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
-//			.values(customer.customerId(), customer.firstName(), customer.lastName(), customer.phoneNo(),customer.createdAt(), customer.createUserId(), customer.modifiedAt(), customer.modifyUserId())
-//			.execute() ;
+		return dslContext.insertInto(Tables.CUSTOMERS, 
+			Tables.CUSTOMERS.CUSTOMER_ID, Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
+			.values(customer.getCustomerId(), customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateUserId(), customer.getModifiedAt(), customer.getModifyUserId())
+			.execute() ;
 	}
-
+	
 	@Override
 	public int count() {
 		log.info("start counting customers using jooq");
@@ -54,44 +44,40 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 
 	@Override
 	public Optional<Customer> get(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		Customer customer = 
+		dslContext.select(
+				Tables.CUSTOMERS.CUSTOMER_ID
+				,Tables.CUSTOMERS.FIRST_NAME
+				,Tables.CUSTOMERS.LAST_NAME
+				,Tables.CUSTOMERS.PHONE_NO
+				,Tables.CUSTOMERS.CREATED_AT
+				,Tables.CUSTOMERS.MODIFIED_AT
+				,Tables.CUSTOMERS.CREATE_USER_ID
+				,Tables.CUSTOMERS.MODIFY_USER_ID
+			,select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
+			.from(Tables.BOOKS)
+			.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID))
+			.asMultiset()
+			//method 1: if we need to select less than the full object, then we should not use construct, because in order for the mapper to work we should have only one constructor in Book that match the selected fields by number and type, as good practice the constructor should be for all class members to mimic the behavior of JPA entity beans, anything less than that we should use custom methods and lambda like method 2
+//			.convertFrom(r -> r.map(Records.mapping(Book::new)))
+			//method 2: using lambda and a method to set bookId and pageNumbers, because method reference for constructor will not work if Book class has more than one constructor, that's why i created setBookOfCustomer()
+			.convertFrom(r -> r.map(t->new Book().setBookOfCustomer(t.component1(),t.component2())))
+		)
+	   .from(Tables.CUSTOMERS)
+	   .where(Tables.CUSTOMERS.CUSTOMER_ID.eq(id))
+	   .fetchSingleInto(Customer.class);
+	 
+		return Optional.of(customer);
 	}
 
 	@Override
 	public Collection<Customer> getAll() {
 		 return dslContext.selectFrom(Tables.CUSTOMERS).fetchInto(Customer.class);
-		
-		 //return null;
 	}
 	
-	public Collection<Customer> getAllCustomersWitNumberOfPagesAsList() {
-		
-//		Result<Record3<Long, String, Result<Record1<String>>>> d = //this assignment will be correct if we remove .asMultiset().convertFrom(r -> r.map(Record1::value1))
-		Result<Record3<Long, String, List<Long>>> d =
-				dslContext.select(
-				Tables.CUSTOMERS.CUSTOMER_ID,
-				Tables.CUSTOMERS.FIRST_NAME,
-				select
-//				(Tables.BOOKS)
-				(Tables.BOOKS.NUMBER_OF_PAGES)
-//				(groupConcat(Tables.BOOKS.NUMBER_OF_PAGES).as("bibi"))
-				.from(Tables.BOOKS)
-				.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID)).asMultiset().convertFrom(r -> r.map(Record1::value1))
-				)
-			   .from(Tables.CUSTOMERS)
-			   .fetch();
-		
-//		System.out.println(d);
-		
-		 return null;
-	}
-
 	
-	public Collection<Customer> getAllCustomers() {
+	public Collection<Customer> getAllWithBooks() {
 		
-//		Result<Record3<Long, String, Result<Record1<String>>>> d = //this assignment will be correct if we remove .asMultiset().convertFrom(r -> r.map(Record1::value1))
-//		Result<Record3<Long, String, List<Long>>> d = //this assignment will be correct if we use fetch() instead of .fetch(Records.mapping(Customer::new));
 		List<Customer> customerList =
 				dslContext.select(
 						Tables.CUSTOMERS.CUSTOMER_ID

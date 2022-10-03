@@ -1,13 +1,11 @@
 package com.wv.model;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
+
 
 //public record Customer(
 //		 Long customerId,
@@ -24,8 +22,12 @@ import lombok.ToString;
 //	
 //}
 
-//************************************************
-
+/************************************************
+* Whether it is POJO or record does not matter, JOOQ only requirement:
+* 1- class should have only one constructor matching the select statement, in case it will be used as method reference in record mapping
+* 2- any number of constructors in case of a custom method is used in mapping using either lambda or inline implementation of Mapper functional interface
+* note: check getAllCustomers() in CustomerRepoJooqImpl.class
+**/
 @Data
 @AllArgsConstructor
 @ToString(doNotUseGetters = true)
@@ -35,12 +37,11 @@ public class Customer {
 	private String firstName;
 	private String lastName;
 	private Long phoneNo;
-//	private List<Address> addressesList;
-//	private List<Order> ordersList;
 	private LocalDateTime createdAt;
 	private LocalDateTime modifiedAt; //(changed automatically on every record change) will be used for optimistic locking
 	private String createUserId;
 	private String modifyUserId;
 	private List<Book> book;
-	
+//	private List<Address> addressesList;
+//	private List<Order> ordersList;
 }

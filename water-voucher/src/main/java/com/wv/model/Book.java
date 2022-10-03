@@ -20,6 +20,13 @@ import lombok.ToString;
 ////	 Long modifyBy
 //) {}
 
+/************************************************
+* Whether it is POJO or record does not matter, JOOQ only requirement:
+* 1- class should have only one constructor matching the select statement, in case it will be used as method reference in record mapping
+* 2- any number of constructors in case of a custom method is used in mapping using either lambda or inline implementation of Mapper functional interface
+* note: check getAllCustomers() in CustomerRepoJooqImpl.class
+**/
+
 @Data
 //@AllArgsConstructor
 @NoArgsConstructor
