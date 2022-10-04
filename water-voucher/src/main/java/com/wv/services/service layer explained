@@ -1,0 +1,9 @@
+SERVICE COMPONENT
+-----------------
+
+
+Service layer is where components annotated with @Service reside.
+service layer is the business layer where data retrieved from DB get modified 
+and other business requirement are done, before data is given to controller layer or saved to DB.
+it is also where any business validation is done.
+for simple CRUD project like this one this layer can be omitted.

@@ -1,4 +1,4 @@
-package com.wv;
+package com.wv.services;
 
 import java.util.Collection;
 

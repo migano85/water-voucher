@@ -35,8 +35,9 @@ public class WaterVoucherApplication implements CommandLineRunner{
 		log.info(customerRepoJooqImpl.count() + "");
 		log.info("***********");
 		log.info(customerRepoJooqImpl.getAllWithBooks() + "");
+		log.info("&&&&&&&&&&&&&&&&&&&&&");
+		log.info(customerRepoJooqImpl.get(1L) + "");
 		log.info("***********");
-		
 	}
 
 }

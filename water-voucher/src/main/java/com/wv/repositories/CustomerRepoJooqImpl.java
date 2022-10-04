@@ -1,20 +1,20 @@
 package com.wv.repositories;
+import static org.jooq.impl.DSL.groupConcat;
+import static org.jooq.impl.DSL.select;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 //import org.jooq.DSLContext;
 //import org.jooq.Records;
-import org.jooq.*;
-import org.jooq.impl.*;
-import static org.jooq.impl.DSL.*;
+import org.jooq.DSLContext;
+import org.jooq.Records;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.wv.jooq.model.Tables;
-import com.wv.jooq.model.tables.pojos.Books;
-import com.wv.jooq.model.tables.pojos.Customers;
-import com.wv.jooq.model.tables.records.BooksRecord;
 import com.wv.model.Book;
 import com.wv.model.Customer;
 
