@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface GlobalRepo <T>{
 	
-	public int save(T t);
+	public void save(T t);
 	public int count();
 	public Optional<T> get(Long id);
 	public Collection<T> getAll();

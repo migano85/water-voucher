@@ -28,12 +28,20 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
     private DSLContext dslContext;
 	
 	@Override
-	public int save(Customer customer) {
+	public void save(Customer customer) {
+		
 		log.info("start saving customers using jooq");
-		return dslContext.insertInto(Tables.CUSTOMERS, 
+		Long customerId = dslContext.insertInto(Tables.CUSTOMERS, 
 			Tables.CUSTOMERS.CUSTOMER_ID, Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
 			.values(customer.getCustomerId(), customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateUserId(), customer.getModifiedAt(), customer.getModifyUserId())
-			.execute() ;
+			.returningResult(Tables.CUSTOMERS.CUSTOMER_ID)
+			.fetchOne()
+			.component1();
+//			.returningResult(Tables.CUSTOMERS.CUSTOMER_ID, Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
+//			.fetchSingleInto(Customer.class); this will return a customer object with the inserted ID, but if DB doesnot support return @@identity, JOOQ will issue new select which may bring another newly inserted record by different thread, so better not to use methods with unexpected behaviors
+		
+		customer.setCustomerId(customerId);
+
 	}
 	
 	@Override
