@@ -39,7 +39,7 @@ public class CustomerRepoJdbcImpl implements CustomerRepo{
 	}
 
 	@Override
-	public Optional<Customer> get(Long id) {
+	public Optional<Customer> get(Integer id) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
 	}
@@ -51,7 +51,7 @@ public class CustomerRepoJdbcImpl implements CustomerRepo{
 	}
 
 	@Override
-	public Set<Book> findCustomerBooks(Long customerId) {
+	public Set<Book> findCustomerBooks(Integer customerId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

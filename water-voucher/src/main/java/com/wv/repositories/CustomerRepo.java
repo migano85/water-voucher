@@ -7,5 +7,5 @@ import com.wv.model.Customer;
 
 public interface CustomerRepo extends GlobalRepo<Customer>{
 
-	public Set<Book> findCustomerBooks(Long customerId);
+	public Set<Book> findCustomerBooks(Integer customerId);
 }

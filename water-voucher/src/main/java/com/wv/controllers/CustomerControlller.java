@@ -34,7 +34,7 @@ public class CustomerControlller {
 	}
 	
 	@GetMapping("employees/{id}")
-	public Customer get(@PathVariable Long id) {
+	public Customer get(@PathVariable Integer id) {
 		return customerRepoJooqImpl.get(id).orElse(null);
 	}
 }

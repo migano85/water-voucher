@@ -10,6 +10,7 @@ import java.util.Set;
 //import org.jooq.DSLContext;
 //import org.jooq.Records;
 import org.jooq.DSLContext;
+import org.jooq.Record1;
 import org.jooq.Records;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -30,17 +31,21 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 	@Override
 	public void save(Customer customer) {
 		
-		Long customerId = dslContext.insertInto(Tables.CUSTOMERS, 
-			Tables.CUSTOMERS.CUSTOMER_ID, Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
-			.values(customer.getCustomerId(), customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateUserId(), customer.getModifiedAt(), customer.getModifyUserId())
+//		Record1<Integer> rec =
+		Integer customerId =
+				dslContext.insertInto(Tables.CUSTOMERS, 
+			 Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
+			.values(customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateUserId(), customer.getModifiedAt(), customer.getModifyUserId())
 			.returningResult(Tables.CUSTOMERS.CUSTOMER_ID)
 			.fetchOne()
 			.component1();
 //			.returningResult(Tables.CUSTOMERS.CUSTOMER_ID, Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
 //			.fetchSingleInto(Customer.class); this will return a customer object with the inserted ID, but if DB doesnot support return @@identity, JOOQ will issue new select which may bring another newly inserted record by different thread, so better not to use methods with unexpected behaviors
+
+//		customer.setCustomerId(rec != null ?rec.component1() : null);
 		
 		customer.setCustomerId(customerId);
-
+System.out.println(customer);
 	}
 	
 	@Override
@@ -50,7 +55,7 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 	}
 
 	@Override
-	public Optional<Customer> get(Long id) {
+	public Optional<Customer> get(Integer id) {
 		Customer customer = 
 		dslContext.select(
 				Tables.CUSTOMERS.CUSTOMER_ID
@@ -146,7 +151,7 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 	}
 
 	@Override
-	public Set<Book> findCustomerBooks(Long customerId) {
+	public Set<Book> findCustomerBooks(Integer customerId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

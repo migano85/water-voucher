@@ -33,7 +33,7 @@ import lombok.ToString;
 @ToString(doNotUseGetters = true)
 public class Book {
 
-	private Long bookId;
+	private Integer bookId;
 	private Long numberOfPages;
 	private Customer customer;
 	private Set<Voucher> vouchersList;
@@ -47,7 +47,7 @@ public class Book {
 	 * if I need more info I can add them later.
 	 * in my opinion this method is better than creating Record class just to handle bookId and numberOfPages
 	*/
-	public Book setBookOfCustomer(Long bookId, Long numberOfPages) {
+	public Book setBookOfCustomer(Integer bookId, Long numberOfPages) {
 		this.bookId = bookId;
 		this.numberOfPages = numberOfPages;
 		return this;
