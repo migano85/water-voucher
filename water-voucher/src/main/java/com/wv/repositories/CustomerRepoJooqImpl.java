@@ -6,19 +6,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-//import org.jooq.DSLContext;
-//import org.jooq.Records;
 import org.jooq.DSLContext;
-import org.jooq.Record1;
 import org.jooq.Records;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.wv.jooq.model.Tables;
 import com.wv.model.Book;
 import com.wv.model.Customer;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -32,7 +26,7 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 	public void save(Customer customer) {
 		
 //		Record1<Integer> rec =
-		Integer customerId = 
+		Long customerId = 
 				dslContext.insertInto(Tables.CUSTOMERS, 
 			 Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
 			.values(customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateUserId(), customer.getModifiedAt(), customer.getModifyUserId())
@@ -47,7 +41,6 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 //		customer.setCustomerId(rec != null ?rec.component1() : null);
 		
 		customer.setCustomerId(customerId);
-System.out.println(customer);
 	}
 	
 	@Override
@@ -57,7 +50,7 @@ System.out.println(customer);
 	}
 
 	@Override
-	public Optional<Customer> get(Integer id) {
+	public Optional<Customer> get(Long id) {
 		Customer customer = 
 		dslContext.select(
 				Tables.CUSTOMERS.CUSTOMER_ID

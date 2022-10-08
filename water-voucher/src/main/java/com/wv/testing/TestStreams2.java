@@ -82,13 +82,13 @@ public class TestStreams2 {
 //        .forEach(x -> System.out.println(x));
 		//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		
-		Integer x = Stream.iterate(4, multipleOfFour -> multipleOfFour + 4)
-		.limit(10)
-		.map(multipleOfFour -> multipleOfFour * multipleOfFour)
-		.filter(multipleOfFourSquared -> multipleOfFourSquared % 10 == 0)
-		.reduce(0, Integer::sum);
-		
-		System.out.println(x);
+//		Integer x = Stream.iterate(4, multipleOfFour -> multipleOfFour + 4)
+//		.limit(10)
+//		.map(multipleOfFour -> multipleOfFour * multipleOfFour)
+//		.filter(multipleOfFourSquared -> multipleOfFourSquared % 10 == 0)
+//		.reduce(0, Integer::sum);
+//		
+//		System.out.println(x);
 	}
 
 }

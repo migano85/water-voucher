@@ -39,7 +39,7 @@ public class CustomerRepoJdbcImpl implements CustomerRepo{
 	}
 
 	@Override
-	public Optional<Customer> get(Integer id) {
+	public Optional<Customer> get(Long id) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
 	}

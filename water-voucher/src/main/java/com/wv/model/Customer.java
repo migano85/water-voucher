@@ -33,7 +33,7 @@ import lombok.ToString;
 @ToString(doNotUseGetters = true)
 public class Customer {
 
-	private Integer customerId;
+	private Long customerId;
 	private String firstName;
 	private String lastName;
 	private Long phoneNo;

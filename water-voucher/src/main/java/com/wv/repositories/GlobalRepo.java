@@ -7,7 +7,7 @@ public interface GlobalRepo <T>{
 	
 	public void save(T t);
 	public int count();
-	public Optional<T> get(Integer id);
+	public Optional<T> get(Long id);
 	public Collection<T> getAll();
 
 }
