@@ -32,15 +32,17 @@ public class CustomerRepoJooqImpl implements CustomerRepo{
 	public void save(Customer customer) {
 		
 //		Record1<Integer> rec =
-		Integer customerId =
+		Integer customerId = 
 				dslContext.insertInto(Tables.CUSTOMERS, 
 			 Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
 			.values(customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateUserId(), customer.getModifiedAt(), customer.getModifyUserId())
 			.returningResult(Tables.CUSTOMERS.CUSTOMER_ID)
 			.fetchOne()
 			.component1();
+//			.returningResult(Tables.CUSTOMERS.CUSTOMER_ID, Tables.CUSTOMERS.LAST_NAME)
+//			.fetch();
 //			.returningResult(Tables.CUSTOMERS.CUSTOMER_ID, Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
-//			.fetchSingleInto(Customer.class); this will return a customer object with the inserted ID, but if DB doesnot support return @@identity, JOOQ will issue new select which may bring another newly inserted record by different thread, so better not to use methods with unexpected behaviors
+//			.fetchSingleInto(Customer.class); this will return a customer object with the inserted ID, but if DB does not support return @@identity, JOOQ will issue new select which may bring another newly inserted record by different thread, so better not to use methods with unexpected behaviors
 
 //		customer.setCustomerId(rec != null ?rec.component1() : null);
 		
