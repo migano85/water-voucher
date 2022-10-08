@@ -4,7 +4,7 @@
 //import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 //
 //@RepositoryRestResource(path = "customers", collectionResourceRel = "customers")
-//public interface CustomerRepoJpa extends PagingAndSortingRepository<Customer, Long> {
+//public interface CustomerRepoJpa extends PagingAndSortingRepository<Customer, Long>, GlobalRepo {
 //  pulbic customizedMethod(Customer);
 //}
 
