@@ -43,9 +43,7 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 		customer.setCustomerId(customerId);
 	}
 	
-	@Override
 	public int count() {
-		log.info("start counting customers using jooq");
 		return dslContext.fetchCount(Tables.CUSTOMERS);
 	}
 

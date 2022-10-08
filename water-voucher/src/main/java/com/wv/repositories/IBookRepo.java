@@ -1,5 +1,7 @@
 package com.wv.repositories;
 
-public interface IBookRepo {
+import com.wv.model.Book;
+
+public interface IBookRepo extends IGlobalRepo<Book>{
 
 }

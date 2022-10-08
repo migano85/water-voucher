@@ -32,9 +32,7 @@ public class CustomerRepoJdbcImpl implements ICustomerRepo{
 		// TODO Auto-generated method stub
 	}
 
-	@Override
 	public int count() {
-		log.info("start counting customers");
 		return jdbcTemplate.queryForObject("select count(*) from customers", Integer.class);
 	}
 
