@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Repository
-public class CustomerRepoJdbcImpl implements CustomerRepo{
+public class CustomerRepoJdbcImpl implements ICustomerRepo{
 
 	/*
 	 * this repository will be discovered automatically because it is in child package of where @SpringBootApplication exists (i.e com.wv). 
