@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.wv.jooq.model.tables.pojos.Customers;
+import com.wv.repositories.BookRepoJooqImpl;
 import com.wv.repositories.CustomerRepoJdbcImpl;
 import com.wv.repositories.CustomerRepoJooqImpl;
 
@@ -17,10 +19,10 @@ public class WaterVoucherApplication implements CommandLineRunner{
 	private static final Logger log = LoggerFactory.getLogger(WaterVoucherApplication.class);
 	
 	@Autowired
-	private CustomerRepoJdbcImpl customerRepoJdbcImpl;
+	private CustomerRepoJooqImpl customerRepoJooqImpl;
 	
 	@Autowired
-	private CustomerRepoJooqImpl customerRepoJooqImpl;
+	private BookRepoJooqImpl bookRepoJooqImpl;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(WaterVoucherApplication.class, args);
@@ -29,15 +31,11 @@ public class WaterVoucherApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 //		log.info("***********");
-//		log.info(customerRepoJdbcImpl.count() + "");
+//		log.info(customerRepoJooqImpl.getAllWithBooks() + "");
 //		log.info("***********");
+		log.info(bookRepoJooqImpl.getAll() +"");
 		log.info("***********");
-		log.info(customerRepoJooqImpl.count() + "");
-		log.info("***********");
-		log.info(customerRepoJooqImpl.getAllWithBooks() + "");
-		log.info("&&&&&&&&&&&&&&&&&&&&&");
-//		log.info(customerRepoJooqImpl.get(1L) + "");
-		log.info("***********");
+//		bookRepoJooqImpl.getAll();
 	}
 
 }

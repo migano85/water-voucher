@@ -1,12 +1,13 @@
 package com.wv.repositories;
-import static org.jooq.impl.DSL.groupConcat;
 import static org.jooq.impl.DSL.select;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.jooq.DSLContext;
+import org.jooq.RecordMapper;
 import org.jooq.Records;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,6 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 public class CustomerRepoJooqImpl implements ICustomerRepo{
 
+	/*
+	 * IMPORTANT NOTES ABOUT JOOQ
+	 * --------------------------
+	 * 
+	 * org.jooq.Result<Record> is equivalent to List<Record> because org.jooq.Result extends record.
+	 * Record1 or Record2 or ... Record100 all extends Record, this is useful for mass manipulation.
+	 * 
+	 * */
 	@Autowired
     private DSLContext dslContext;
 	
@@ -27,9 +36,9 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 		
 //		Record1<Integer> rec =
 		Long customerId = 
-				dslContext.insertInto(Tables.CUSTOMERS, 
-			 Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_USER_ID, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_USER_ID)
-			.values(customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateUserId(), customer.getModifiedAt(), customer.getModifyUserId())
+			dslContext.insertInto(Tables.CUSTOMERS, 
+					Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_BY, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_BY)
+			.values(customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateBy(), customer.getModifiedAt(), customer.getModifyBy())
 			.returningResult(Tables.CUSTOMERS.CUSTOMER_ID)
 			.fetchOne()
 			.component1();
@@ -57,21 +66,46 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 				,Tables.CUSTOMERS.PHONE_NO
 				,Tables.CUSTOMERS.CREATED_AT
 				,Tables.CUSTOMERS.MODIFIED_AT
-				,Tables.CUSTOMERS.CREATE_USER_ID
-				,Tables.CUSTOMERS.MODIFY_USER_ID
+				,Tables.CUSTOMERS.CREATE_BY
+				,Tables.CUSTOMERS.MODIFY_BY
 			,select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
 			.from(Tables.BOOKS)
 			.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID))
 			.asMultiset()
 			//method 1: if we need to select less than the full object, then we should not use construct, because in order for the mapper to work we should have only one constructor in Book that match the selected fields by number and type, as good practice the constructor should be for all class members to mimic the behavior of JPA entity beans, anything less than that we should use custom methods and lambda like method 2
 //			.convertFrom(r -> r.map(Records.mapping(Book::new)))
-			//method 2: using lambda and a method to set bookId and pageNumbers, because method reference for constructor will not work if Book class has more than one constructor, that's why i created setBookOfCustomer()
-			.convertFrom(r -> r.map(t->new Book().setBookOfCustomer(t.component1(),t.component2())))
+			
+			//method 2: using lambda to implement RecordMapper<Record, Book> (it takes record and return book) because method reference for constructor will not work if Book class has more than one constructor, that's why i created setBook()
+			.convertFrom(r -> r.map(/*new ArrayList<Book>(*/rec->new Book().setBook(rec))) //if I want the result to be ArrayList<Book> instead of List<book> just wrap the resulting List<book> inside ArrayList constructor
+			
+			//method 3: inline implementation of functional interface RecordMapper
+//			.convertFrom(r->
+//					new ArrayList<Book>( //if I want the result to be ArrayList<Book> instead of List<book> just wrap the resulting List<book> inside ArrayList constructor
+//					r.map(//map() takes RecordMapper and return List<book>
+//							new RecordMapper<org.jooq.Record, Book>() {
+//						          @Override
+//						          public Book map(org.jooq.Record rec) {
+//						        	  Book book = new Book();
+//						        	  book.setBook(rec);
+//						              return book;
+//						          }
+//							}
+//							
+//						)//map
+//					)//arrayList<Book>
+//			)//convertFrom
 		)
 	   .from(Tables.CUSTOMERS)
 	   .where(Tables.CUSTOMERS.CUSTOMER_ID.eq(id))
 	   .fetchSingleInto(Customer.class);
 	 
+//		RecordMapper<BookRecord, Book> r =new RecordMapper<BookRecord, Book>() {
+//	          @Override
+//	          public Book map(BookRecord rec) {
+//	              return new Book();
+//	          }
+//		};
+
 		return Optional.of(customer);
 	}
 
@@ -90,9 +124,9 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 						,Tables.CUSTOMERS.LAST_NAME
 						,Tables.CUSTOMERS.PHONE_NO
 						,Tables.CUSTOMERS.CREATED_AT
+						,Tables.CUSTOMERS.CREATE_BY
 						,Tables.CUSTOMERS.MODIFIED_AT
-						,Tables.CUSTOMERS.CREATE_USER_ID
-						,Tables.CUSTOMERS.MODIFY_USER_ID
+						,Tables.CUSTOMERS.MODIFY_BY
 					,select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
 					.from(Tables.BOOKS)
 					.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID))
@@ -100,7 +134,7 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 					//method 1: if we need to select less than the full object, then we should not use construct, because in order for the mapper to work we should have only one constructor in Book that match the selected fields by number and type, as good practice the constructor should be for all class members to mimic the behavior of JPA entity beans, anything less than that we should use custom methods and lambda like method 2
 //					.convertFrom(r -> r.map(Records.mapping(Book::new)))
 					//method 2: using lambda and a method to set bookId and pageNumbers, because method reference for constructor will not work if Book class has more than one constructor, that's why i created setBookOfCustomer()
-					.convertFrom(r -> r.map(t->new Book().setBookOfCustomer(t.component1(),t.component2())))
+					.convertFrom(r -> r.map(t->new Book().setBook(t)))
 				)
 			   .from(Tables.CUSTOMERS)
 			   //using method reference
@@ -121,28 +155,7 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 	/*this method directly convert select result to be called directly by REST controller no need to Model object that will again be converted to JSON
 	* we need to call formatJSON() after fetching the result
 	*/
-	public Collection<Customer> getAllCustomersJson() {
-		
-		//*******
-		// var keyword was introduced in java 10
-		// record class in java 14
-		//*******
-		var d = dslContext.select(
-				Tables.CUSTOMERS.CUSTOMER_ID,
-				Tables.CUSTOMERS.FIRST_NAME,
-				select(
-				groupConcat(Tables.BOOKS.NUMBER_OF_PAGES).as("bibi"))
-				.from(Tables.BOOKS)
-				.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID)).asField()
-				)
-			   .from(Tables.CUSTOMERS)
-			   .fetch().formatJSON();
-		
-		System.out.println(d);
-		
-		 return null;
-	}
-
+	
 	@Override
 	public Set<Book> findCustomerBooks(Integer customerId) {
 		// TODO Auto-generated method stub

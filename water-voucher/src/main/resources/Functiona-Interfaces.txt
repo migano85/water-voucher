@@ -1,0 +1,7 @@
+useful functional interfaces
+---------------------------
+1-RecordMapper --> JOOQ
+1-Supplier
+2-Consumer
+3-Converter
+4-Function
