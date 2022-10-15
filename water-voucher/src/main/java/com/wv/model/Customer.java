@@ -2,10 +2,7 @@ package com.wv.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.Function;
-
-import com.wv.jooq.model.tables.Customers;
-
+import com.wv.jooq.model.tables.pojos.Customers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -51,7 +48,7 @@ public class Customer {
 //	private List<Order> ordersList;
 	
 	
-	public static Customer setCustomer(com.wv.jooq.model.tables.pojos.Customers cust) {
+	public static Customer setCustomer(Customers cust) {
 		if(cust != null) {//set only userImportant fields
 			return new Customer(cust.getCustomerId(), cust.getFirstName(), cust.getLastName(), cust.getPhoneNo(), null, null, null, null, null);
 		}else {
