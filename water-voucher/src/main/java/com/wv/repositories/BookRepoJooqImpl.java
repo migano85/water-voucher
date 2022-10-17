@@ -53,7 +53,7 @@ public class BookRepoJooqImpl implements IBookRepo{
 		Collection<Book> bookList = 
 		dslContext.select(
 				Tables.BOOKS.BOOK_ID
-				,Tables.BOOKS.customers().mapping(com.wv.jooq.model.tables.pojos.Customers::new).as("cust")
+				,Tables.BOOKS.customers().mapping(com.wv.jooq.model.tables.pojos.Customers::new).as("customers")
 		)
 		.from(Tables.BOOKS)
 		.fetch(r ->r.map(rec->new Book().setBook(rec)));

@@ -51,10 +51,9 @@ public class Book {
 	
 	public Book setBook(Record record) {
 		
-		
 		this.bookId = record.indexOf(Tables.BOOKS.BOOK_ID) != -1 ? record.get(Tables.BOOKS.BOOK_ID): null;
 		this.numberOfPages = record.indexOf(Tables.BOOKS.NUMBER_OF_PAGES) != -1 ? record.get(Tables.BOOKS.NUMBER_OF_PAGES): null;
-		this.customer = Customer.setCustomer((Customers)record.get("cust"));
+		this.customer = record.indexOf("customers") != -1 ? Customer.setCustomer((Customers)record.get("customers")): null;
 				
 		return this;
 	}

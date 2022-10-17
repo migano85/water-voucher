@@ -127,18 +127,20 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 						,Tables.CUSTOMERS.CREATE_BY
 						,Tables.CUSTOMERS.MODIFIED_AT
 						,Tables.CUSTOMERS.MODIFY_BY
-					,select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
-					.from(Tables.BOOKS)
-					.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID))
-					.asMultiset()
-					//method 1: if we need to select less than the full object, then we should not use construct, because in order for the mapper to work we should have only one constructor in Book that match the selected fields by number and type, as good practice the constructor should be for all class members to mimic the behavior of JPA entity beans, anything less than that we should use custom methods and lambda like method 2
-//					.convertFrom(r -> r.map(Records.mapping(Book::new)))
-					//method 2: using lambda and a method to set bookId and pageNumbers, because method reference for constructor will not work if Book class has more than one constructor, that's why i created setBookOfCustomer()
-					.convertFrom(r -> r.map(rec->new Book().setBook(rec)))
+						,select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
+								.from(Tables.BOOKS)
+								.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID))
+								.asMultiset()
+								//method 1: if we need to select less than the full object, then we should not use construct, because in order for the mapper to work we should have only one constructor in Book that match the selected fields by number and type, as good practice the constructor should be for all class members to mimic the behavior of JPA entity beans, anything less than that we should use custom methods and lambda like method 2
+								//.convertFrom(r -> r.map(Records.mapping(Book::new)))
+								//method 2: using lambda and a method to set bookId and pageNumbers, because method reference for constructor will not work if Book class has more than one constructor, that's why i created setBookOfCustomer()
+								.convertFrom(r -> r.map(rec->new Book().setBook(rec)))
+//						,select(Tables.)
 				)
 			   .from(Tables.CUSTOMERS)
 			   //using method reference
-			   .fetch(Records.mapping(Customer::new));
+			   .fetch(Records.mapping(Customer::setAll));
+//			   .fetch(Records.mapping(Customer::new));
 			   //using lambda
 //			   .fetch(currentRecord->new Customer(currentRecord.component1(), currentRecord.component2(), currentRecord.component3(), currentRecord.component4(), currentRecord.component5(), currentRecord.component6()));
 			   //using old way

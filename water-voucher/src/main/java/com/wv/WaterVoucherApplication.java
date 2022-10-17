@@ -30,10 +30,10 @@ public class WaterVoucherApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
+		log.info("***********");
+		log.info(customerRepoJooqImpl.getAllWithBooks() + "");
 //		log.info("***********");
-//		log.info(customerRepoJooqImpl.getAllWithBooks() + "");
-//		log.info("***********");
-		log.info(bookRepoJooqImpl.getAll() +"");
+//		log.info(bookRepoJooqImpl.getAll() +"");
 		log.info("***********");
 //		bookRepoJooqImpl.getAll();
 	}

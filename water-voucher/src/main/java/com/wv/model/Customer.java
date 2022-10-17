@@ -43,19 +43,24 @@ public class Customer {
 	private LocalDateTime modifiedAt; //(changed automatically on every record change) will be used for optimistic locking
 	private String modifyBy;
 	private List<Book> book;
-//	public static Function function;
-//	private List<Address> addressesList;
+	private List<Address> addressesList;
 //	private List<Order> ordersList;
+	
 	
 	
 	public static Customer setCustomer(Customers cust) {
 		if(cust != null) {//set only userImportant fields
-			return new Customer(cust.getCustomerId(), cust.getFirstName(), cust.getLastName(), cust.getPhoneNo(), null, null, null, null, null);
+			return new Customer(cust.getCustomerId(), cust.getFirstName(), cust.getLastName(), cust.getPhoneNo(), null, null, null, null, null, null);
 		}else {
 			return null;
 		}
 	}
-//	public static void setCustomer(Function<Customers, Customer> function) {
-//		Customer.function = function;
-//	}
+	
+	public static Customer setAll(Long customerId, String firstName, String lastName, Long phoneNo, LocalDateTime createdAt,
+		String createBy, LocalDateTime modifiedAt, String modifyBy, List<Book> book) {
+	
+	return new Customer(customerId, firstName, lastName, phoneNo, createdAt, createBy, modifiedAt, modifyBy, book, null);
+	
+	}
+
 }
