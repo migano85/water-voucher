@@ -16,7 +16,6 @@ import com.wv.model.Book;
 import com.wv.model.Customer;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Repository
 public class CustomerRepoJooqImpl implements ICustomerRepo{
 

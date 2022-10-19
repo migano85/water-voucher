@@ -43,22 +43,31 @@ public class BookRepoJooqImpl implements IBookRepo{
 
 	@Override
 	public Optional<Book> get(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		Book book = 
+				dslContext.select(Tables.BOOKS)
+				.from(Tables.BOOKS)
+				.where(Tables.BOOKS.BOOK_ID.eq(id))
+				.fetchOneInto(Book.class);
+		
+		return Optional.of(book);
 	}
 
 	@Override
 	public Collection<Book> getAll() {
 		
 		Collection<Book> bookList = 
-		dslContext.select(
-				Tables.BOOKS.BOOK_ID
-				,Tables.BOOKS.customers().mapping(com.wv.jooq.model.tables.pojos.Customers::new).as("customers")
-		)
-		.from(Tables.BOOKS)
-		.fetch(r ->r.map(rec->new Book().setBook(rec)));
+				dslContext.select(
+						Tables.BOOKS.BOOK_ID
+						,Tables.BOOKS.NUMBER_OF_PAGES
+						,Tables.BOOKS.CREATED_AT
+						,Tables.BOOKS.CREATED_BY
+						,Tables.BOOKS.MODIFIED_AT
+						,Tables.BOOKS.MODIFIED_BY
+						,Tables.BOOKS.customers().mapping(com.wv.jooq.model.tables.pojos.Customers::new).as("customers")
+				)
+				.from(Tables.BOOKS)
+				.fetch(r ->r.map(rec->new Book().setBook(rec)));
 		
-//		System.out.println(d);
 		return bookList;
 	}
 
