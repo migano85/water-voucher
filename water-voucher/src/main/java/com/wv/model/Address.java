@@ -22,7 +22,7 @@ public class Address {
 	private LocalDate createdAt;
 	private String createdBy;
 	private LocalDate modifiedAt; //(changed automatically on every record change) will be used for optimistic locking
-	private String modifyBy;
+	private String modifiedBy;
 	
 	public Address setAddress(Record record) {
 		

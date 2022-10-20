@@ -22,7 +22,7 @@ public class AddressRepoJooqImpl implements IAddressRepo{
 		Long addressId = 
 			dslContext.insertInto(Tables.ADDRESSES,
 					Tables.ADDRESSES.CUSTOMER_ID, Tables.ADDRESSES.ZONE_NO, Tables.ADDRESSES.STREET_NO, Tables.ADDRESSES.BUILDING_NO, Tables.ADDRESSES.DESCRIPTION, Tables.ADDRESSES.CREATED_AT, Tables.ADDRESSES.CREATED_BY, Tables.ADDRESSES.MODIFIED_AT, Tables.ADDRESSES.MODIFIED_BY)
-			.values(customerId, address.getZoneNo(), address.getStreetNo(), address.getBuildingNo(), address.getAddressDesc(), address.getCreatedAt(), address.getCreatedBy(), address.getModifiedAt(), address.getModifyBy())
+			.values(customerId, address.getZoneNo(), address.getStreetNo(), address.getBuildingNo(), address.getAddressDesc(), address.getCreatedAt(), address.getCreatedBy(), address.getModifiedAt(), address.getModifiedBy())
 			.returningResult(Tables.ADDRESSES.ADDRESS_ID)
 			.fetchOne()
 			.component1();
