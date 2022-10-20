@@ -104,7 +104,19 @@
 									<name>org.jooq.meta.mysql.MySQLDatabase</name>
 									<includes>.*</includes>
 									<excludes></excludes>
+									<!--dateAsTimestamp>true</dateAsTimestamp-->
 									<inputSchema>wv</inputSchema>
+									<!-- Associate data type rewrites with database columns -->
+									<forcedTypes>
+										<forcedType>
+											<!-- Specify any data type that is supported in your database, or if unsupported, 
+								               a type from org.jooq.impl.SQLDataType -->
+								          <name>BOOLEAN</name>
+								    
+								          <!-- A Java regex matching fully-qualified columns, attributes, parameters. Use the pipe to separate several expressions. -->
+								          <includeExpression>.*\.filled</includeExpression>
+										</forcedType>
+									</forcedTypes>
 								</database>
 								<generate>
 									<pojos>true</pojos>
