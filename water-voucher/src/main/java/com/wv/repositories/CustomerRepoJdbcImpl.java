@@ -54,4 +54,10 @@ public class CustomerRepoJdbcImpl implements ICustomerRepo{
 		return null;
 	}
 
+	@Override
+	public void delete(Long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

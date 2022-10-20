@@ -62,4 +62,11 @@ public class AddressRepoJooqImpl implements IAddressRepo{
 		return addressList;
 	}
 
+	@Override
+	public void delete(Long id) {
+		dslContext.delete(Tables.ADDRESSES)
+			.where(Tables.ADDRESSES.ADDRESS_ID.eq(id))
+			.execute();
+	}
+
 }

@@ -112,7 +112,12 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 		 return dslContext.selectFrom(Tables.CUSTOMERS).fetchInto(Customer.class);
 	}
 	
-	
+	@Override
+	public void delete(Long id) {
+		dslContext.delete(Tables.CUSTOMERS)
+			.where(Tables.CUSTOMERS.CUSTOMER_ID.eq(id))
+			.execute();
+	}
 	public Collection<Customer> getAllWithBooks() {
 		
 		List<Customer> customerList =

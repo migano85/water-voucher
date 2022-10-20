@@ -55,4 +55,10 @@ public class BottleRepoJooqImpl implements IBottleRepo{
 		return bottleList;
 	}
 
+	@Override
+	public void delete(Long id) {
+		dslContext.delete(Tables.BOTTLES)
+			.where(Tables.BOTTLES.BOTTLE_ID.eq(id))
+			.execute();
+	}
 }

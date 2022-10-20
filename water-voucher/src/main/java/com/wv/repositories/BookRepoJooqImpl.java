@@ -68,6 +68,13 @@ public class BookRepoJooqImpl implements IBookRepo{
 	}
 
 	@Override
+	public void delete(Long id) {
+		dslContext.delete(Tables.BOOKS)
+			.where(Tables.BOOKS.BOOK_ID.eq(id))
+			.execute();
+	}
+	
+	@Override
 	public void fillBookVouchers(Long bookId, List<Voucher> vouchersList) {
 		// TODO Auto-generated method stub
 		
@@ -78,5 +85,4 @@ public class BookRepoJooqImpl implements IBookRepo{
 		// TODO Auto-generated method stub
 		
 	}
-
 }
