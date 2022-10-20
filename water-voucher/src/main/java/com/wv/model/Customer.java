@@ -44,7 +44,6 @@ public class Customer {
 	private String modifyBy;
 	private List<Book> book;
 	private List<Address> addressesList;
-//	private List<Order> ordersList;
 	
 	
 	

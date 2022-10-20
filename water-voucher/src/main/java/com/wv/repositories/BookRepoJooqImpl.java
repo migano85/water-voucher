@@ -1,20 +1,16 @@
 package com.wv.repositories;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.jooq.DSLContext;
-import org.jooq.Records;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.wv.jooq.model.Tables;
-import com.wv.jooq.model.tables.Books;
-import com.wv.jooq.model.tables.Customers;
 import com.wv.model.Book;
-import com.wv.model.Customer;
-
-import lombok.extern.slf4j.Slf4j;
+import com.wv.model.Voucher;
 
 @Repository
 public class BookRepoJooqImpl implements IBookRepo{
@@ -28,7 +24,7 @@ public class BookRepoJooqImpl implements IBookRepo{
 		Long bookId = 
 			dslContext.insertInto(Tables.BOOKS, 
 				Tables.BOOKS.NUMBER_OF_PAGES, Tables.BOOKS.CUSTOMER_ID, Tables.BOOKS.CREATED_AT, Tables.BOOKS.CREATED_BY, Tables.BOOKS.MODIFIED_AT, Tables.BOOKS.MODIFIED_BY)
-			.values(book.getNumberOfPages(), customerId, book.getCreatedAt(), book.getCreateBy(), book.getModifiedAt(), book.getModifyBy())
+			.values(book.getNumberOfPages(), customerId, book.getCreatedAt(), book.getCreateBy(), book.getModifiedAt(), book.getModifiedBy())
 //			.values(getAll());//to insert multiple records
 			.returningResult(Tables.BOOKS.BOOK_ID)
 			.fetchOne()
@@ -69,6 +65,18 @@ public class BookRepoJooqImpl implements IBookRepo{
 				.fetch(r ->r.map(rec->new Book().setBook(rec)));
 		
 		return bookList;
+	}
+
+	@Override
+	public void fillBookVouchers(Long bookId, List<Voucher> vouchersList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteVoucher(Long bookId, Long voucherId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

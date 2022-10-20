@@ -10,18 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-//public record Book(
-//
-//	 Long bookId,
-//	 Long numberOfPages
-////	Customer customer,
-////	 Set<Voucher> vouchersList,
-////	 Date createdAt,
-////	 Long createBy,
-////	 Date modifiedAt, //(changed automatically on every record change) will be used for optimistic locking
-////	 Long modifyBy
-//) {}
-
 /************************************************
 * Whether it is POJO or record does not matter, JOOQ only requirement:
 * 1- class should have only one constructor matching the select statement, in case it will be used as method reference in record mapping
@@ -41,7 +29,7 @@ public class Book {
 	private LocalDate createdAt;
 	private String createBy;
 	private LocalDate modifiedAt; //(changed automatically on every record change) will be used for optimistic locking
-	private String modifyBy;
+	private String modifiedBy;
 	
 	/*
 	 * to associate list of books with customer no need to map all fields, it will be like JPA entity in eager mode which will affect performance and load extra useless data, 

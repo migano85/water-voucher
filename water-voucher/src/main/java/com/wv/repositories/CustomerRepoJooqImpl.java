@@ -1,20 +1,19 @@
 package com.wv.repositories;
 import static org.jooq.impl.DSL.select;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 import org.jooq.DSLContext;
-import org.jooq.RecordMapper;
 import org.jooq.Records;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import com.wv.jooq.model.Tables;
 import com.wv.model.Book;
 import com.wv.model.Customer;
-import lombok.extern.slf4j.Slf4j;
 
 @Repository
 public class CustomerRepoJooqImpl implements ICustomerRepo{
@@ -36,7 +35,7 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 //		Record1<Integer> rec =
 		Long customerId = 
 			dslContext.insertInto(Tables.CUSTOMERS, 
-					Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATE_BY, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFY_BY)
+					Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATED_BY, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFIED_BY)
 			.values(customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateBy(), customer.getModifiedAt(), customer.getModifyBy())
 			.returningResult(Tables.CUSTOMERS.CUSTOMER_ID)
 			.fetchOne()
@@ -65,8 +64,8 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 				,Tables.CUSTOMERS.PHONE_NO
 				,Tables.CUSTOMERS.CREATED_AT
 				,Tables.CUSTOMERS.MODIFIED_AT
-				,Tables.CUSTOMERS.CREATE_BY
-				,Tables.CUSTOMERS.MODIFY_BY
+				,Tables.CUSTOMERS.CREATED_BY
+				,Tables.CUSTOMERS.MODIFIED_BY
 			,select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
 			.from(Tables.BOOKS)
 			.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID))
@@ -123,9 +122,9 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 						,Tables.CUSTOMERS.LAST_NAME
 						,Tables.CUSTOMERS.PHONE_NO
 						,Tables.CUSTOMERS.CREATED_AT
-						,Tables.CUSTOMERS.CREATE_BY
+						,Tables.CUSTOMERS.CREATED_BY
 						,Tables.CUSTOMERS.MODIFIED_AT
-						,Tables.CUSTOMERS.MODIFY_BY
+						,Tables.CUSTOMERS.MODIFIED_BY
 						,select(Tables.BOOKS.BOOK_ID, Tables.BOOKS.NUMBER_OF_PAGES)
 								.from(Tables.BOOKS)
 								.where(Tables.BOOKS.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID))

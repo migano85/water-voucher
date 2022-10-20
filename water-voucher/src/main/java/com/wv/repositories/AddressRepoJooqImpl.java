@@ -44,7 +44,7 @@ public class AddressRepoJooqImpl implements IAddressRepo{
 	@Override
 	public Collection<Address> getAll() {
 		
-		Collection<Address> bookList = 
+		Collection<Address> addressList = 
 				dslContext.select(
 						Tables.ADDRESSES.ADDRESS_ID
 						,Tables.ADDRESSES.ZONE_NO
@@ -59,7 +59,7 @@ public class AddressRepoJooqImpl implements IAddressRepo{
 				.from(Tables.ADDRESSES)
 				.fetch(r ->r.map(rec->new Address().setAddress(rec)));
 		
-		return bookList;
+		return addressList;
 	}
 
 }
