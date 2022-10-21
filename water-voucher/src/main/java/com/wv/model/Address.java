@@ -24,7 +24,7 @@ public class Address {
 	private LocalDate modifiedAt; //(changed automatically on every record change) will be used for optimistic locking
 	private String modifiedBy;
 	
-	public Address setAddress(Record record) {
+	public Address setRecord(Record record) {
 		
 		this.addressId = record.indexOf(Tables.ADDRESSES.ADDRESS_ID) != -1 ? record.get(Tables.ADDRESSES.ADDRESS_ID): null;
 		this.customer = record.indexOf("customers") != -1 ? Customer.setCustomer((Customers)record.get("customers")): null;

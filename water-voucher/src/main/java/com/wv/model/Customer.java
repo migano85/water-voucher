@@ -2,6 +2,10 @@ package com.wv.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.jooq.Record;
+
+import com.wv.jooq.model.Tables;
 import com.wv.jooq.model.tables.pojos.Customers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,6 +49,14 @@ public class Customer {
 	private List<Book> book;
 	private List<Address> addressesList;
 	
+	
+	public Customer setRecord(Record record) {
+		
+		this.customerId = record.indexOf(Tables.CUSTOMERS.CUSTOMER_ID) != -1 ? record.get(Tables.CUSTOMERS.CUSTOMER_ID): null;
+		this.firstName = record.indexOf(Tables.CUSTOMERS.FIRST_NAME) != -1 ? record.get(Tables.CUSTOMERS.FIRST_NAME): null;
+				
+		return this;
+	}
 	
 	
 	public static Customer setCustomer(Customers cust) {

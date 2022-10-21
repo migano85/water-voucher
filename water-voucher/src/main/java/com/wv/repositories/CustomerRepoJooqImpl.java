@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.wv.jooq.model.Tables;
+import com.wv.model.Address;
 import com.wv.model.Book;
 import com.wv.model.Customer;
 
@@ -92,10 +93,18 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 //						)//map
 //					)//arrayList<Book>
 //			)//convertFrom
+			
+			,select(Tables.ADDRESSES.ADDRESS_ID, Tables.ADDRESSES.ZONE_NO, Tables.ADDRESSES.STREET_NO, Tables.ADDRESSES.BUILDING_NO)
+			.from(Tables.ADDRESSES)
+			.where(Tables.ADDRESSES.CUSTOMER_ID.eq(Tables.CUSTOMERS.CUSTOMER_ID))
+			.asMultiset()
+			.convertFrom(r -> r.map(/*new ArrayList<Book>(*/rec->new Address().setRecord(rec)))
 		)
 	   .from(Tables.CUSTOMERS)
 	   .where(Tables.CUSTOMERS.CUSTOMER_ID.eq(id))
 	   .fetchSingleInto(Customer.class);
+//	   .fetchInto(Records.mapping(Customer::setRecord));
+//	   .fetchInto(rec -> rec.map(Records.mapping(Customer::setRecord)));
 	 
 //		RecordMapper<BookRecord, Book> r =new RecordMapper<BookRecord, Book>() {
 //	          @Override

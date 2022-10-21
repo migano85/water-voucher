@@ -57,7 +57,7 @@ public class AddressRepoJooqImpl implements IAddressRepo{
 						,Tables.ADDRESSES.customers().mapping(com.wv.jooq.model.tables.pojos.Customers::new).as("customers")
 				)
 				.from(Tables.ADDRESSES)
-				.fetch(r ->r.map(rec->new Address().setAddress(rec)));
+				.fetch(r ->r.map(rec->new Address().setRecord(rec)));
 		
 		return addressList;
 	}
