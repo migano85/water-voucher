@@ -11,9 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.wv.model.Book;
 import com.wv.model.Customer;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Repository
 public class CustomerRepoJdbcImpl implements ICustomerRepo{
 
