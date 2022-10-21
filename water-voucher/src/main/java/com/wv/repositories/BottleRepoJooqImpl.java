@@ -7,10 +7,12 @@ import java.util.Optional;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.wv.jooq.model.Tables;
 import com.wv.model.Bottle;
 
+@Repository
 public class BottleRepoJooqImpl implements IBottleRepo{
 
 	@Autowired
