@@ -3,6 +3,7 @@ package com.wv.controllers;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,7 @@ import com.wv.repositories.CustomerRepoJooqImpl;
 
 @RestController
 //@RequestMapping("/custApi")
-public class CustomerControlller {
+public class CustomerControlller implements IGlobalController<Customer>{
 
 	@Autowired
 	private CustomerRepoJooqImpl customerRepoJooqImpl;
@@ -29,8 +30,15 @@ public class CustomerControlller {
 		customerRepoJooqImpl.save(customer);
 	}
 	
-	@GetMapping("employees/{id}")
+	@GetMapping("customers/{id}")
 	public Customer get(@PathVariable Long id) {
 		return customerRepoJooqImpl.get(id).orElse(null);
+	}
+
+	@Override
+	@DeleteMapping("customers/{id}")
+	public void delete(@PathVariable Long id) {
+		customerRepoJooqImpl.delete(id);
+		
 	}
 }
