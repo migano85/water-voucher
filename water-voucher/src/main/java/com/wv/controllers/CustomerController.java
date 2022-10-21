@@ -15,7 +15,7 @@ import com.wv.repositories.CustomerRepoJooqImpl;
 
 @RestController
 //@RequestMapping("/custApi")
-public class CustomerControlller implements IGlobalController<Customer>{
+public class CustomerController implements IGlobalController<Customer>{
 
 	@Autowired
 	private CustomerRepoJooqImpl customerRepoJooqImpl;
