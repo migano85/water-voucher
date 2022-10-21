@@ -76,13 +76,27 @@ public class BookRepoJooqImpl implements IBookRepo{
 	
 	@Override
 	public void fillBookVouchers(Long bookId, List<Voucher> vouchersList) {
-		// TODO Auto-generated method stub
 		
+//		dslContext.batchInsert(null);
+//		dslContext.insertInto(Tables.VOUCHERS,
+//				Tables.VOUCHERS.VOUCHER_SERIAL, Tables.VOUCHERS., Tables.VOUCHERS.FILLED, Tables.VOUCHERS.CREATED_AT, Tables.VOUCHERS.CREATED_BY, Tables.VOUCHERS.MODIFIED_AT, Tables.VOUCHERS.MODIFIED_BY)
+//		.values(bottle.getSize(), bottle.getSerialNo(), bottle.isFilled(), bottle.getCreatedAt(), bottle.getCreatedBy(), bottle.getModifiedAt(), bottle.getModifiedBy())
+//		.returningResult(Tables.ADDRESSES.ADDRESS_ID)
+//		.fetchOne()
+//		.component1();
+	
 	}
 
 	@Override
-	public void deleteVoucher(Long bookId, Long voucherId) {
+	public void deleteBookVoucher(Long voucherId) {
+		dslContext.delete(Tables.VOUCHERS)
+		.where(Tables.VOUCHERS.VOUCHER_ID.eq(voucherId))
+		.execute();		
+	}
+
+	@Override
+	public Voucher getBookVoucher(Long voucherId) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 }

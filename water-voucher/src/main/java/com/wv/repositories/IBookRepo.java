@@ -8,5 +8,6 @@ import com.wv.model.Voucher;
 public interface IBookRepo extends IGlobalRepo<Book>{
 
 	public void fillBookVouchers(Long bookId, List<Voucher> vouchersList);
-	public void deleteVoucher(Long bookId, Long voucherId);//to delete voucher we need bookId which is the aggregate root, we cannot do anything to the aggregate without aggregate root Id
+	public void deleteBookVoucher(Long voucherId);
+	public Voucher getBookVoucher(Long voucherId);
 }
