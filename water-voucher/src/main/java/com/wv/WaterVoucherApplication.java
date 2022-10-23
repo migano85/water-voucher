@@ -32,10 +32,10 @@ public class WaterVoucherApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		log.info("***********");
 //		log.info(customerRepoJooqImpl.getAllWithBooks() + "");
+////		log.info("***********");
+//		log.info(customerRepoJooqImpl.get(1L) +"");
 //		log.info("***********");
-		log.info(customerRepoJooqImpl.get(1L) +"");
-		log.info("***********");
-//		bookRepoJooqImpl.getAll();
+		bookRepoJooqImpl.getAll();
 	}
 	
 

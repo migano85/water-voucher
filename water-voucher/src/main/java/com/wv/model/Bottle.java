@@ -1,21 +1,19 @@
 package com.wv.model;
 
-import java.time.LocalDate;
+import com.wv.jooq.model.tables.pojos.Bottles;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
-@ToString(doNotUseGetters = true)
-public class Bottle {
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper=true)
+@ToString(doNotUseGetters = true, callSuper = true)
+public class Bottle extends Bottles {
 
-	private Long bottleId;
-	private Double size; //in little
-	private String serialNo;
-	private boolean filled;
-	private LocalDate createdAt;
-	private String createdBy;
-	private LocalDate modifiedAt; //(changed automatically on every record change) will be used for optimistic locking
-	private String modifiedBy;
+	private static final long serialVersionUID = 1L;
+
 }
 

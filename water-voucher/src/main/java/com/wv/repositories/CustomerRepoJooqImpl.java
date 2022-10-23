@@ -37,7 +37,7 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 		Long customerId = 
 			dslContext.insertInto(Tables.CUSTOMERS, 
 					Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATED_BY, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFIED_BY)
-			.values(customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreateBy(), customer.getModifiedAt(), customer.getModifyBy())
+			.values(customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreatedBy(), customer.getModifiedAt(), customer.getModifiedBy())
 			.returningResult(Tables.CUSTOMERS.CUSTOMER_ID)
 			.fetchOne()
 			.component1();
@@ -75,7 +75,7 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 //			.convertFrom(r -> r.map(Records.mapping(Book::new)))
 			
 			//method 2: using lambda to implement RecordMapper<Record, Book> (it takes record and return book) because method reference for constructor will not work if Book class has more than one constructor, that's why i created setBook()
-			.convertFrom(r -> r.map(/*new ArrayList<Book>(*/rec->new Book().setBook(rec))) //if I want the result to be ArrayList<Book> instead of List<book> just wrap the resulting List<book> inside ArrayList constructor
+			.convertFrom(r -> r.map(/*new ArrayList<Book>(*/rec->new Book().setRecord(rec))) //if I want the result to be ArrayList<Book> instead of List<book> just wrap the resulting List<book> inside ArrayList constructor
 			
 			//method 3: inline implementation of functional interface RecordMapper
 //			.convertFrom(r->
@@ -146,12 +146,12 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 								//method 1: if we need to select less than the full object, then we should not use construct, because in order for the mapper to work we should have only one constructor in Book that match the selected fields by number and type, as good practice the constructor should be for all class members to mimic the behavior of JPA entity beans, anything less than that we should use custom methods and lambda like method 2
 								//.convertFrom(r -> r.map(Records.mapping(Book::new)))
 								//method 2: using lambda and a method to set bookId and pageNumbers, because method reference for constructor will not work if Book class has more than one constructor, that's why i created setBookOfCustomer()
-								.convertFrom(r -> r.map(rec->new Book().setBook(rec)))
+								.convertFrom(r -> r.map(rec->new Book().setRecord(rec)))
 //						,select(Tables.)
 				)
 			   .from(Tables.CUSTOMERS)
 			   //using method reference
-			   .fetch(Records.mapping(Customer::setAll));
+			   .fetch(Records.mapping(Customer::setWithBooks));
 //			   .fetch(Records.mapping(Customer::new));
 			   //using lambda
 //			   .fetch(currentRecord->new Customer(currentRecord.component1(), currentRecord.component2(), currentRecord.component3(), currentRecord.component4(), currentRecord.component5(), currentRecord.component6()));

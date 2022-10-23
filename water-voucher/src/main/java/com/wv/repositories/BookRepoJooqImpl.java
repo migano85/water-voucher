@@ -24,7 +24,7 @@ public class BookRepoJooqImpl implements IBookRepo{
 		Long bookId = 
 			dslContext.insertInto(Tables.BOOKS, 
 				Tables.BOOKS.NUMBER_OF_PAGES, Tables.BOOKS.CUSTOMER_ID, Tables.BOOKS.CREATED_AT, Tables.BOOKS.CREATED_BY, Tables.BOOKS.MODIFIED_AT, Tables.BOOKS.MODIFIED_BY)
-			.values(book.getNumberOfPages(), customerId, book.getCreatedAt(), book.getCreateBy(), book.getModifiedAt(), book.getModifiedBy())
+			.values(book.getNumberOfPages(), customerId, book.getCreatedAt(), book.getCreatedBy(), book.getModifiedAt(), book.getModifiedBy())
 //			.values(getAll());//to insert multiple records
 			.returningResult(Tables.BOOKS.BOOK_ID)
 			.fetchOne()
@@ -62,7 +62,7 @@ public class BookRepoJooqImpl implements IBookRepo{
 						,Tables.BOOKS.customers().mapping(com.wv.jooq.model.tables.pojos.Customers::new).as("customers")
 				)
 				.from(Tables.BOOKS)
-				.fetch(r ->r.map(rec->new Book().setBook(rec)));
+				.fetch(r ->r.map(rec->new Book().setRecord(rec)));
 		
 		return bookList;
 	}

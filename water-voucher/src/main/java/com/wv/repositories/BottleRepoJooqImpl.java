@@ -23,8 +23,8 @@ public class BottleRepoJooqImpl implements IBottleRepo{
 		
 		Long bottleId = 
 			dslContext.insertInto(Tables.BOTTLES,
-					Tables.BOTTLES.SIZE, Tables.BOTTLES.SERIAL_NUMBER, Tables.BOTTLES.FILLED, Tables.ADDRESSES.CREATED_AT, Tables.ADDRESSES.CREATED_BY, Tables.ADDRESSES.MODIFIED_AT, Tables.ADDRESSES.MODIFIED_BY)
-			.values(bottle.getSize(), bottle.getSerialNo(), bottle.isFilled(), bottle.getCreatedAt(), bottle.getCreatedBy(), bottle.getModifiedAt(), bottle.getModifiedBy())
+					Tables.BOTTLES.SIZE, Tables.BOTTLES.SERIAL_NUMBER, Tables.BOTTLES.FILLED, Tables.BOTTLES.CREATED_AT, Tables.BOTTLES.CREATED_BY, Tables.BOTTLES.MODIFIED_AT, Tables.BOTTLES.MODIFIED_BY)
+			.values(bottle.getSize(), bottle.getSerialNumber(), bottle.getFilled(), bottle.getCreatedAt(), bottle.getCreatedBy(), bottle.getModifiedAt(), bottle.getModifiedBy())
 			.returningResult(Tables.ADDRESSES.ADDRESS_ID)
 			.fetchOne()
 			.component1();
