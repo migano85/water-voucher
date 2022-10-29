@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+   db:
+      # service 1 create database
+      image: mysql
+      container_name: mysqlDB
+      restart: unless-stopped
+      networks:
+         - myNetwork
+      environment: #environment can be a list as bellow in water-voucher or as a key:value like here
+         MYSQL_ROOT_PASSWORD: root
+         MYSQL_DATABASE: wv
+      ports:
+         - "3307:3306"
+      volumes:
+         - C:/docker-mysql-data:/var/lib/mysql
+      
+   water-voucher:
+      #service 2 run docker file of water voucher
+      image: water-voucher-image
+      container_name: water-voucher-app
+      build:
+         dockerfile: Dockerfile
+      environment: #environment can be key:value as above in db or as a list like here
+         - SPRING_DATASOURCE_URL =jdbc:mysql://localhost:3306/wv?allowMultiQueries=true&createDatabaseIfNotExist=true
+         - SPRING_DATASOURCE_USERNAME =root
+         - SPRING_DATASOURCE_PASSWORD =admin
+      ports:
+         - "8081:8080"
+      depends_on:
+         - db
+
+networks:
+         myNetwork:
+            name: test
+            driver: bridge

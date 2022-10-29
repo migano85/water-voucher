@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.wv</groupId>
 	<artifactId>water-voucher</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<name>water-voucher</name>
 	<description>voucher app for water distributors</description>
 	<properties>
@@ -95,7 +95,7 @@
 							<!--Insert your DB configuration-->
 							<jdbc>
 								<driver>com.mysql.cj.jdbc.Driver</driver>
-								<url>jdbc:mysql://localhost:3306/wv</url>
+								<url>jdbc:mysql://127.0.0.1:3307/wv</url>
 								<user>root</user>
 								<password>admin</password>
 							</jdbc>
