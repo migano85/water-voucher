@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wv.model.Customer;
+import com.wv.repositories.CustomerRepoJdbcImpl;
 import com.wv.repositories.CustomerRepoJooqImpl;
 
 @RestController
@@ -19,10 +20,17 @@ public class CustomerController implements IGlobalController<Customer>{
 
 	@Autowired
 	private CustomerRepoJooqImpl customerRepoJooqImpl;
+	@Autowired
+	private CustomerRepoJdbcImpl customerRepoJdbcImpl;
 	
 	@GetMapping("/customers")
 	public Collection<Customer> getAll(){
 		return customerRepoJooqImpl.getAllWithBooks();
+	}
+	
+	@GetMapping("/customersCount")
+	public int getCustomerCount(){
+		return customerRepoJdbcImpl.count();
 	}
 	
 	@PostMapping("/customers")

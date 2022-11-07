@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.env.Environment;
 
 import com.wv.jooq.model.tables.pojos.Customers;
 import com.wv.repositories.BookRepoJooqImpl;
@@ -24,6 +25,9 @@ public class WaterVoucherApplication implements CommandLineRunner{
 	@Autowired
 	private BookRepoJooqImpl bookRepoJooqImpl;
 	
+	@Autowired
+	private Environment environment;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(WaterVoucherApplication.class, args);
 	}
@@ -31,11 +35,20 @@ public class WaterVoucherApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		log.info("***********");
+		log.info(environment.getProperty("MYSQL_HOST"));
+		log.info("***********");
+		log.info(environment.getProperty("MYSQL_PASSWORD"));
+		log.info("***********");
+		log.info(environment.getProperty("MYSQL_PORT"));
+		log.info("***********");
+		log.info(environment.getProperty("MYSQL_URL"));
+		log.info("***********");
+		log.info(environment.getProperty("MYSQL_USER"));
 //		log.info(customerRepoJooqImpl.getAllWithBooks() + "");
 ////		log.info("***********");
 //		log.info(customerRepoJooqImpl.get(1L) +"");
 //		log.info("***********");
-		bookRepoJooqImpl.getAll();
+//		bookRepoJooqImpl.getAll();
 	}
 	
 

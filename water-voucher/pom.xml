@@ -95,9 +95,9 @@
 							<!--Insert your DB configuration-->
 							<jdbc>
 								<driver>com.mysql.cj.jdbc.Driver</driver>
-								<url>jdbc:mysql://127.0.0.1:3307/wv</url>
-								<user>root</user>
-								<password>admin</password>
+								<url>${env.MYSQL_URL}</url>
+								<user>${env.MYSQL_USER}</user>
+								<password>${env.MYSQL_PASSWORD}</password>
 							</jdbc>
 							<generator>
 								<database>
