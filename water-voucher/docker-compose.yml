@@ -38,7 +38,7 @@ services:
       depends_on:
          - db
 
-networks: #if the network tag is omitted in water-voucher-app and mysqlDB containers, then this network will not be created and they will be assigned to a default netwrok of them, and they connect to each other, but as a good practice it's better to create the network and name it yourself, better then getting an arbitrary network created when executing docker-compose up -d
+networks: #if the network tag is omitted in both water-voucher-app and mysqlDB containers, then this network will not be created and they will be assigned to a default netwrok of them, and they connect to each other, but as a good practice it's better to create the network and name it yourself, better then getting an arbitrary network created when executing docker-compose up -d
          myNetwork:
             name: water-voucher-net
             driver: bridge
