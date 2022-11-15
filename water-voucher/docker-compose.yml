@@ -18,7 +18,7 @@ services:
       
    water-voucher:
       #service 2 run docker file of water voucher
-      image: water-voucher-image
+      image: migano/water-voucher-image
       container_name: water-voucher-app
       build:
          dockerfile: Dockerfile
