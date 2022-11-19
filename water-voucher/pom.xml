@@ -92,13 +92,19 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<!--Insert your DB configuration-->
+							<!--Insert your DB configuration, to be taken from enviroment variables -->
 							<jdbc>
 								<driver>com.mysql.cj.jdbc.Driver</driver>
 								<url>${env.MYSQL_URL}</url>
-								<user>${env.MYSQL_USER}</user>
-								<password>${env.MYSQL_PASSWORD}</password>
+								<user>root</user>
+								<password>root</password>
 							</jdbc>
+							<!--jdbc>
+								<driver>com.mysql.cj.jdbc.Driver</driver>
+								<url>jdbc:mysql://localhost:3307/wv</url>
+								<user>root</user>
+								<password>root</password>
+							</jdbc-->
 							<generator>
 								<database>
 									<name>org.jooq.meta.mysql.MySQLDatabase</name>
