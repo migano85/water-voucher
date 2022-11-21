@@ -10,13 +10,24 @@ import test.UserTest;
 
 public class classWithMain{
 	
+	public static Comparator<String> compMethod(){
+		return (first, second)->Integer.compare(first.length(), second.length());
+	}
+	
 	public static void main(String[] args) {
+		
+		Comparator<String> comp = compMethod();
+		
+		System.out.println(comp.compare("AB", "BBC"));
+		
 //		String first = "first";
 //		String second = "Second";
 
 		Comparator<UserTest> compUser = (u1,u2)->u1.getAge().compareTo(u2.getAge());
-		ArrayList<UserTest> list = new ArrayList<>(); list.add(new UserTest(9L,78)); list.add(new UserTest(4L,55)); list.add(new UserTest(3L,44)); list.add(new UserTest(2L,22));
-		System.out.println(list); list.sort(compUser); System.out.println(list);
+		//*****************************SORTING start **********************************************
+//		ArrayList<UserTest> list = new ArrayList<>(); list.add(new UserTest(9L,78)); list.add(new UserTest(4L,55)); list.add(new UserTest(3L,44)); list.add(new UserTest(2L,22));
+//		System.out.println(list); list.sort(compUser); System.out.println(list);
+		//*****************************SORTING end**********************************************
 		
 //		Comparator<String> compExample1 = (first, second)->Integer.compare(first.length(), second.length());
 //		
