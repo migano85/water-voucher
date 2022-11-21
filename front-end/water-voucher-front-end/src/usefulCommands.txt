@@ -1,0 +1,8 @@
+- sfc + tab  => stateless functional component (arrow function)
+
+Install extension(vscode)– Reactjs code snippets (charalampos karypidis)
+-> means Tab.
+rcc-> == class component skeleton.
+rsc-> == stateless component skeleton.
+rsf-> == stateless named function skeleton.
+​
