@@ -1,11 +1,12 @@
 package com.wv.repositories;
 import static org.jooq.impl.DSL.select;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Records;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 	 * IMPORTANT NOTES ABOUT JOOQ
 	 * --------------------------
 	 * 
-	 * org.jooq.Result<Record> is equivalent to List<Record> because org.jooq.Result extends record.
+	 * org.jooq.Result<Record> is equivalent to List<Record> because org.jooq.Result extends java.util.List
 	 * Record1 or Record2 or ... Record100 all extends Record, this is useful for mass manipulation.
 	 * 
 	 * */
@@ -171,9 +172,26 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 	*/
 	
 	@Override
-	public Set<Book> findCustomerBooks(Integer customerId) {
+	public List<Book> findCustomerBooks(Integer customerId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Customer> searchCustomerByCriteria(Customer customer) {
+		ArrayList<Condition> conditions = new ArrayList<>();
+		if(customer != null) {
+			if(customer.getFirstName() != null) {
+				conditions.add(Tables.CUSTOMERS.FIRST_NAME.equalIgnoreCase(customer.getFirstName()));
+			}
+			if(customer.getLastName() != null) {
+				conditions.add(Tables.CUSTOMERS.LAST_NAME.equalIgnoreCase(customer.getLastName()));
+			}
+		}
+		
+		return dslContext.selectFrom(Tables.CUSTOMERS)
+				.where(conditions)
+				.fetchInto(Customer.class);
 	}
 
 }

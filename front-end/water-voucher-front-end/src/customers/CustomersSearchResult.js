@@ -1,11 +1,11 @@
 import React from "react";
-
+import "./CustomersSearchResult.css";
 function CustomersSearchResult({ customers }) {
   return (
     <div>
       <table>
         <tbody>
-          <tr key="0">
+          <tr className="headerRow" key="0">
             <td width={300}>first name</td>
             <td width={300}>last name</td>
             <td width={300}>phone number</td>

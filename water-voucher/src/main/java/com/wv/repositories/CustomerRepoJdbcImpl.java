@@ -1,6 +1,7 @@
 package com.wv.repositories;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -55,6 +56,12 @@ public class CustomerRepoJdbcImpl implements ICustomerRepo{
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Customer> searchCustomerByCriteria(Customer customer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

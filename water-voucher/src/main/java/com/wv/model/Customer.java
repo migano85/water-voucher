@@ -53,7 +53,9 @@ public class Customer extends Customers{
 	private List<Book> bookList;
 	private List<Address> addressesList;
 	
-	
+	public Customer() {
+		
+	}
 	public Customer(Customers customers){
 		super(customers);
 	}
