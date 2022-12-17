@@ -181,10 +181,10 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 	public List<Customer> searchCustomerByCriteria(Customer customer) {
 		ArrayList<Condition> conditions = new ArrayList<>();
 		if(customer != null) {
-			if(customer.getFirstName() != null) {
+			if(customer.getFirstName() != null && !customer.getFirstName().isBlank()) {
 				conditions.add(Tables.CUSTOMERS.FIRST_NAME.equalIgnoreCase(customer.getFirstName()));
 			}
-			if(customer.getLastName() != null) {
+			if(customer.getLastName() != null && !customer.getLastName().isBlank()) {
 				conditions.add(Tables.CUSTOMERS.LAST_NAME.equalIgnoreCase(customer.getLastName()));
 			}
 		}

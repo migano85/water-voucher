@@ -14,12 +14,31 @@ const CustomersSearch = () => {
     e.preventDefault();
     const customerCriteria = { firstName, lastName };
     console.log(JSON.stringify(customerCriteria));
+    //------------------------------------------
 
-    setCustomers(data);
-    console.log("data value is");
-    console.log(data);
-    console.log("customers values is ");
-    console.log(customers);
+    fetch("http://localhost:8080/customers/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(customerCriteria),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          alert("something went wrong");
+        } else {
+          //document.querySelector("button").disabled = true;
+          // history.push("/");
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        // setCustomers((customers) => [data, ...customers]);
+        console.log("data value");
+        // console.log({ data });
+        // console.log("customer value");
+        setCustomers(data);
+        // console.log({ customers });
+      });
+    //------------------------------------------
   };
   return (
     <div>
@@ -63,6 +82,9 @@ const CustomersSearch = () => {
       {isPending && <div>Loading...</div>}
       {data && !customers && <CustomersSearchResult customers={data} />}
       {customers && <CustomersSearchResult customers={customers} />}
+
+      {data && !customers && <p>we are data</p>}
+      {customers && <p>we are customers</p>}
     </div>
   );
 };
