@@ -20,24 +20,19 @@ const CustomersSearch = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(customerCriteria),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          alert("something went wrong");
-        } else {
-          //document.querySelector("button").disabled = true;
-          // history.push("/");
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        // setCustomers((customers) => [data, ...customers]);
-        console.log("data value");
-        // console.log({ data });
-        // console.log("customer value");
+    }).then(async (res) => {
+      if (!res.ok) {
+        alert("something went wrong");
+      } else {
+        //document.querySelector("button").disabled = true;
+        // history.push("/");
+      }
+      setCustomers(await res.json());
+      //return res.json();
+    });
+    /*  .then((data) => {
         setCustomers(data);
-        // console.log({ customers });
-      });
+      });*/
     //------------------------------------------
   };
   return (
