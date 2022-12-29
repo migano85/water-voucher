@@ -14,7 +14,7 @@ services:
       ports:
          - "3307:3306"
       volumes:
-         - C:/docker-mysql-data:/var/lib/mysql
+         - D:/docker-mysql-data:/var/lib/mysql
       
    water-voucher:
       #service 2 run docker file of water voucher
