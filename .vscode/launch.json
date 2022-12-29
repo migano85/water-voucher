@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-WaterVoucherApplication<water-voucher>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.wv.WaterVoucherApplication",
+            "projectName": "water-voucher",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

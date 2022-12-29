@@ -7,7 +7,7 @@ const CustomersSearch = () => {
   const [lastName, setLastName] = useState("");
   const [customers, setCustomers] = useState(null);
   const { error, isPending, data } = useFetch(
-    "http://localhost:8081/customers"
+    "http://localhost:8080/customers/all"
   );
 
   const hanldeSubmit = (e) => {
