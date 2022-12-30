@@ -7,34 +7,38 @@ const CustomersSearch = () => {
   const [lastName, setLastName] = useState("");
   const [customers, setCustomers] = useState(null);
   const { error, isPending, data } = useFetch(
-    "http://localhost:8080/customers/all"
+    "http://localhost:8081/customers/all"
   );
 
   const hanldeSubmit = (e) => {
     e.preventDefault();
     const customerCriteria = { firstName, lastName };
-    console.log(JSON.stringify(customerCriteria));
-    //------------------------------------------
 
-    fetch("http://localhost:8080/customers/search", {
+    fetch("http://localhost:8081/customers/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(customerCriteria),
-    }).then(async (res) => {
+    })
+    //---------- method 1 using return promise -------------------
+    .then((res) => {
       if (!res.ok) {
         alert("something went wrong");
-      } else {
-        //document.querySelector("button").disabled = true;
-        // history.push("/");
+      }
+      return res.json();
+    }).then((data) => {
+        setCustomers(data);
+      });
+    //----------- method 2 using async .. await -----------------
+    /*.then(async (res) => {
+      if (!res.ok) {
+        alert("something went wrong");
       }
       setCustomers(await res.json());
-      //return res.json();
-    });
-    /*  .then((data) => {
-        setCustomers(data);
-      });*/
+    });*/
     //------------------------------------------
-  };
+};
+   
+  
   return (
     <div>
       <h2 className="title">Customers</h2>
@@ -77,9 +81,6 @@ const CustomersSearch = () => {
       {isPending && <div>Loading...</div>}
       {data && !customers && <CustomersSearchResult customers={data} />}
       {customers && <CustomersSearchResult customers={customers} />}
-
-      {data && !customers && <p>we are data</p>}
-      {customers && <p>we are customers</p>}
     </div>
   );
 };
