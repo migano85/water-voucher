@@ -1,0 +1,11 @@
+.NotFoundDiv {
+  width: 100%;
+  height: 520px;
+}
+.toHomePageLink {
+  font-size: larger;
+  font-weight: bolder;
+}
+.NotFoundDiv img {
+  height: inherit;
+}

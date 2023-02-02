@@ -48,7 +48,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/fetch
     */
   }, [url]);
 
-  return { data, isPending, error };
+  return { resData : data, isPending, error };//the name here should be used also in caller, in this case resData, the caller also should use the name resData like this return statement
 };
 
 export default useFetch;

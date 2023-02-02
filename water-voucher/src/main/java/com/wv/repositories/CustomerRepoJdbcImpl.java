@@ -27,40 +27,33 @@ public class CustomerRepoJdbcImpl implements ICustomerRepo{
 	@Override
 	public void save(Customer customer) {
 //		log.info("start saving customer" + customer.getCustomerId());
-		// TODO Auto-generated method stub
 	}
 
-	public int count() {
+	public Integer count() {
 		return jdbcTemplate.queryForObject("select count(*) from customers", Integer.class);
 	}
 
 	@Override
 	public Optional<Customer> get(Long id) {
-		// TODO Auto-generated method stub
 		return Optional.empty();
 	}
 
 	@Override
 	public Collection<Customer> getAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Set<Book> findCustomerBooks(Integer customerId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+	public void delete(Long id) {		
 	}
 
 	@Override
 	public List<Customer> searchCustomerByCriteria(Customer customer) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -179,6 +179,8 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 
 	@Override
 	public List<Customer> searchCustomerByCriteria(Customer customer) {
+		System.out.println("&&&&&&&&&&&&&&&&&");
+		System.out.println(customer);
 		ArrayList<Condition> conditions = new ArrayList<>();
 		if(customer != null) {
 			if(customer.getFirstName() != null && !customer.getFirstName().isBlank()) {
