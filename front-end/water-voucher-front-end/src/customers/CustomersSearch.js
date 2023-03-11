@@ -11,7 +11,7 @@ const CustomersSearch = () => {
   const [customers, setCustomers] = useState(null);
 
   const { error, isPending, resData } = useFetch(
-    "http://localhost:8081/customers/all"
+    "http://localhost:8080/customers/all"
   );
 
   const handleSubmit = (e) => {
@@ -19,7 +19,7 @@ const CustomersSearch = () => {
     const customerCriteria = { firstName, lastName };
 
     axios
-      .post("http://localhost:8081/customers/search", customerCriteria)
+      .post("http://localhost:8080/customers/search", customerCriteria)
       .then((res) => {
         setCustomers(res.data);
       });
@@ -65,6 +65,9 @@ const CustomersSearch = () => {
       </form>
       <Link className="linkAsButton" to="/addCustomer">
         ADD
+      </Link>
+      <Link className="linkAsButton" to="/addBook">
+        ADD BOOK
       </Link>
       {error && <div>{error}</div>}
       {isPending && <div>Loading...</div>}

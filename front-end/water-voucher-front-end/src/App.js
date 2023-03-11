@@ -3,24 +3,28 @@ import "./App.css";
 import CustomersSearch from "./customers/CustomersSearch";
 import AddCustomer from "./customers/AddCustomer";
 import NotFound from "./NotFound";
+import AddBook from "./books/AddBook";
 
 function App() {
   return (
-     <Router>
-     <div className="App">
-       <Switch>
-         <Route exact path={"/"}>
-           <CustomersSearch />
-         </Route>
-         <Route path={"/addCustomer"}>
-           <AddCustomer />
-         </Route>
-         <Route path="*">
-           <NotFound />
-         </Route>
-       </Switch>
-     </div>
-   </Router>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route exact path={"/"}>
+            <CustomersSearch />
+          </Route>
+          <Route path={"/addCustomer"}>
+            <AddCustomer />
+          </Route>
+          <Route path={"/addBook"}>
+            <AddBook />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

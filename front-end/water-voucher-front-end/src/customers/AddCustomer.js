@@ -19,7 +19,7 @@ function AddCustomer(props) {
       lastName,
       phone,
     };
-    fetch("http://localhost:8081/customers/customer", {
+    fetch("http://localhost:8080/customers/customer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(customer),
