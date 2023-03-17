@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from "react";
+import useFetch from "../useFetch";
 import Select from "react-select";
 import "./AddBook.css";
 
 const AddBook = () => {
   const [selectedOptions, setSelectedOptions] = useState();
-  const optionList = [
-    { value: "red", label: "Red" },
-    { value: "green", label: "Green" },
-    { value: "yellow", label: "Yellow" },
-    { value: "blue", label: "Blue" },
-    { value: "white", label: "White" },
-  ];
+
+  const { error, isPending, resData } = useFetch(
+    "http://localhost:8080/customers/all"
+  );
+
+  const [optionList, setOptionList] = useState([]);
+  console.log(resData);
+  // setOptionList(resData);
+
+  // const optionList = [
+  //   { value: "red", label: "Red" },
+  //   { value: "green", label: "Green" },
+  //   { value: "yellow", label: "Yellow" },
+  //   { value: "blue", label: "Blue" },
+  //   { value: "white", label: "White" },
+  // ];
 
   // Function triggered on selection
   function handleSelect(data) {
@@ -53,7 +63,7 @@ const AddBook = () => {
           <tbody>
             <tr>
               <td>
-                <label>Book</label>
+                <label>No of pages</label>
               </td>
               <td>
                 <input id="txtPagesNo" type="text" required />
@@ -61,16 +71,17 @@ const AddBook = () => {
             </tr>
             <tr>
               <td>
-                <label>color</label>
+                <label>customer</label>
               </td>
               <td className="dropdown-container">
                 <Select
-                  options={optionList}
-                  placeholder="Select color"
+                  options={resData}
+                  getOptionLabel={(e) => e.firstName}
+                  getOptionValue={(e) => e.customerId}
+                  placeholder="Select customer"
                   value={selectedOptions}
                   onChange={handleSelect}
                   isSearchable={true}
-                  isMulti
                   styles={customStyles}
                 />
               </td>
