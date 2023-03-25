@@ -12,31 +12,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wv.model.Book;
 import com.wv.repositories.BookRepoJooqImpl;
+import com.wv.services.BookService;
 
 @RestController
 @RequestMapping("/book-api")
 public class BookControlller implements IGlobalController<Book>{
 
 	@Autowired
-	private BookRepoJooqImpl bookRepoJooqImpl;
+	private BookRepoJooqImpl repoJooqImpl;
+	@Autowired
+	private BookService service;
 	
 	@GetMapping("/books")
 	public Collection<Book> getAll(){
-		return bookRepoJooqImpl.getAll();
+		return repoJooqImpl.getAll();
 	}
 	
 	@PostMapping("/books")
 	public void save(@RequestBody Book book) {
-		bookRepoJooqImpl.save(book);
+		service.createBookWithVouchers(book);
 	}
 	
 	@GetMapping("books/{id}")
 	public Book get(@PathVariable Long id) {
-		return bookRepoJooqImpl.get(id).orElse(null);
+		return repoJooqImpl.get(id).orElse(null);
 	}
 
 	@Override
 	public void delete(@PathVariable Long id) {
-		bookRepoJooqImpl.delete(id);		
+		repoJooqImpl.delete(id);		
 	}
 }

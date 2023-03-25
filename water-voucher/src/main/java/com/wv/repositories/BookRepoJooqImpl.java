@@ -20,7 +20,7 @@ public class BookRepoJooqImpl implements IBookRepo{
 	
 	@Override
 	public void save(Book book) {
-		Long customerId = book.getCustomer() != null?book.getCustomer().getCustomerId() : null;
+		Long customerId = book.getCustomer() != null?book.getCustomer().getCustomerId() : book.getCustomerId();
 		Long bookId = 
 			dslContext.insertInto(Tables.BOOKS, 
 				Tables.BOOKS.NUMBER_OF_PAGES, Tables.BOOKS.CUSTOMER_ID, Tables.BOOKS.CREATED_AT, Tables.BOOKS.CREATED_BY, Tables.BOOKS.MODIFIED_AT, Tables.BOOKS.MODIFIED_BY)
