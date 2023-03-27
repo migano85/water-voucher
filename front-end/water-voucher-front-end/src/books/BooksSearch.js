@@ -13,7 +13,7 @@ const BookSearch = () => {
   function handleSubmit() {
     e.preventDefault();
 
-    axios.get("http://localhost:8080/books-api/search").then((res) => {
+    axios.get("http://localhost:8080/books/search").then((res) => {
       setBooks(res.data);
     });
   }

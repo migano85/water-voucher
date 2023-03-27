@@ -3,38 +3,45 @@ package com.wv.controllers;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wv.model.Bottle;
 import com.wv.repositories.BottleRepoJooqImpl;
 
 @RestController
+@RequestMapping("/bottles")
 public class BottleController implements IGlobalController<Bottle>{
 
 	@Autowired
-	private BottleRepoJooqImpl bottleRepoJooqImpl;
+	private BottleRepoJooqImpl repoJooqImpl;
 	
-	@GetMapping("/books")
+	@Override
+	@GetMapping("/all")
 	public Collection<Bottle> getAll(){
-		return bottleRepoJooqImpl.getAll();
+		return repoJooqImpl.getAll();
 	}
 	
-	@PostMapping("/books")
+	@Override
+	@PostMapping("/bottle")
 	public void save(@RequestBody Bottle bottle) {
-		bottleRepoJooqImpl.save(bottle);
+		repoJooqImpl.save(bottle);
 	}
 	
-	@GetMapping("books/{id}")
+	@Override
+	@GetMapping("/{id}")
 	public Bottle get(@PathVariable Long id) {
-		return bottleRepoJooqImpl.get(id).orElse(null);
+		return repoJooqImpl.get(id).orElse(null);
 	}
 
 	@Override
+	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		bottleRepoJooqImpl.delete(id);		
+		repoJooqImpl.delete(id);		
 	}
 }
