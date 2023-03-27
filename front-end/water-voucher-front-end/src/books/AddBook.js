@@ -26,7 +26,7 @@ const AddBook = () => {
       numberOfPages,
       customerId,
     };
-    console.log(book);
+
     fetch("http://localhost:8080/book-api/books", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -96,7 +96,7 @@ const AddBook = () => {
                   customer {selectedOption != null && selectedOption.firstName}
                 </label>
               </td>
-              <td className="dropdown-container">
+              <td>
                 <Select
                   options={resData}
                   getOptionLabel={(e) => e.firstName + " " + e.lastName}
