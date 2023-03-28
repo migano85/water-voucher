@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
+import BooksSearchResult from "./BooksSearchResult";
+import axios from "axios";
+
 const BookSearch = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [customerId, setCustomerIdValue] = useState();
@@ -13,9 +16,11 @@ const BookSearch = () => {
   function handleSubmit() {
     e.preventDefault();
 
-    axios.get("http://localhost:8080/books/search").then((res) => {
-      setBooks(res.data);
-    });
+    axios
+      .get("http://localhost:8080/books/customerId=" + customerId)
+      .then((res) => {
+        setBooks(res.data);
+      });
   }
 
   function handleSelect(selectedValue) {
@@ -60,8 +65,7 @@ const BookSearch = () => {
       </Link>
       {error && <div>{error}</div>}
       {isPending && <div>Loading...</div>}
-      {resData && !customers && <CustomersSearchResult customers={resData} />}
-      {customers && <CustomersSearchResult customers={customers} />}
+      {books && <BooksSearchResult books={books} />}
     </div>
   );
 };
