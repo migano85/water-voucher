@@ -1,3 +1,6 @@
+table {
+  text-align: center;
+}
 tr.headerRow {
   background-color: bisque;
 }

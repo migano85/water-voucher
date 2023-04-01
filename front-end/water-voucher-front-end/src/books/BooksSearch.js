@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import BooksSearchResult from "./BooksSearchResult";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const BookSearch = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -9,11 +10,14 @@ const BookSearch = () => {
   const [books, setBooks] = useState();
   const [customers, setCustomers] = useState();
 
-  axios.get("http://localhost:8080/customers/all").then((res) => {
-    setCustomers(res.data);
-  });
+  //onComponentMount - first time
+  useEffect(() => {
+    axios.get("http://localhost:8080/customers/all").then((res) => {
+      setCustomers(res.data);
+    });
+  }, []);
 
-  function handleSubmit() {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
@@ -21,14 +25,24 @@ const BookSearch = () => {
       .then((res) => {
         setBooks(res.data);
       });
-  }
+  };
 
   function handleSelect(selectedValue) {
     setSelectedOption(selectedValue);
+    setCustomerIdValue(selectedValue.customerId);
+    //******** ask lakchmi why the following gives customerId undefined
+    // if (selectedOption != null) {
+    //   setCustomerIdValue(selectedOption.customerId);
+    //   console.log(customerId, "custId");
+    // }
   }
-  useEffect(() => {
-    setCustomerIdValue(selectedOption.customerId);
-  }, [selectedOption]);
+  // useEffect(() => {
+  //   console.log(selectedOption, "slectedOption");
+  //   if (selectedOption != null) {
+  //     setCustomerIdValue(selectedOption.customerId);
+  //     console.log(customerId, "custId");
+  //   }
+  // }, [selectedOption]);
   return (
     <div>
       <h2 className="title">Books</h2>
@@ -51,20 +65,15 @@ const BookSearch = () => {
             </tr>
             <tr>
               <td colSpan="2">
-                <button>search</button>
+                <button>SEARCH</button>
               </td>
             </tr>
           </tbody>
         </table>
       </form>
-      <Link className="linkAsButton" to="/addCustomer">
-        ADD
-      </Link>
       <Link className="linkAsButton" to="/addBook">
         ADD BOOK
       </Link>
-      {error && <div>{error}</div>}
-      {isPending && <div>Loading...</div>}
       {books && <BooksSearchResult books={books} />}
     </div>
   );

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.wv.jooq.model.Tables;
+import com.wv.jooq.model.tables.Books;
 import com.wv.model.Book;
 import com.wv.model.Voucher;
 
@@ -97,5 +98,25 @@ public class BookRepoJooqImpl implements IBookRepo{
 	@Override
 	public Voucher getBookVoucher(Long voucherId) {
 		return null;
+	}
+
+	@Override
+	public Collection<Book> getBooksByCustomerId(Long customerId) {
+		
+		Collection<Book> bookList = 
+				dslContext.select(
+						Tables.BOOKS.BOOK_ID
+						,Tables.BOOKS.NUMBER_OF_PAGES
+						,Tables.BOOKS.CREATED_AT
+						,Tables.BOOKS.CREATED_BY
+						,Tables.BOOKS.MODIFIED_AT
+						,Tables.BOOKS.MODIFIED_BY
+						,Tables.BOOKS.customers().mapping(com.wv.jooq.model.tables.pojos.Customers::new).as("customers")
+				)
+				.from(Tables.BOOKS)
+				.where(Tables.BOOKS.CUSTOMER_ID.eq(customerId))
+				.fetch(r ->r.map(rec->new Book().setRecord(rec)));
+
+				return bookList;
 	}
 }

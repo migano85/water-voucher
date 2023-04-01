@@ -1,5 +1,8 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import "./CustomersSearchResult.css";
+import editImg from "../images/icons/edit-row-48.png";
+import trashImg from "../images/icons/trash-48.png";
 function CustomersSearchResult({ customers }) {
   return (
     <div>
@@ -9,12 +12,24 @@ function CustomersSearchResult({ customers }) {
             <td width={300}>first name</td>
             <td width={300}>last name</td>
             <td width={300}>phone number</td>
+            <td>Edit</td>
+            <td>Delete</td>
           </tr>
           {customers.map((customer) => (
             <tr key={customer.customerId}>
               <td>{customer.firstName}</td>
               <td>{customer.lastName}</td>
               <td>{customer.phoneNo}</td>
+              <td>
+                <NavLink to="/booksSearch">
+                  <img src={editImg} />
+                </NavLink>
+              </td>
+              <td>
+                <NavLink to="/booksSearch">
+                  <img src={trashImg} />
+                </NavLink>
+              </td>
             </tr>
           ))}
         </tbody>

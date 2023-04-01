@@ -46,7 +46,7 @@ public class BookController implements IGlobalController<Book>{
 	}
 
 	@GetMapping("/customerId={customerId}")
-	public Book getBooksByCustomerId(@PathVariable Long customerId){
-		return null;
+	public Collection<Book> getBooksByCustomerId(@PathVariable Long customerId){
+		return repoJooqImpl.getBooksByCustomerId(customerId);
 	}
 }

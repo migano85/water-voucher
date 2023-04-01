@@ -4,6 +4,8 @@ import CustomersSearch from "./customers/CustomersSearch";
 import AddCustomer from "./customers/AddCustomer";
 import NotFound from "./NotFound";
 import AddBook from "./books/AddBook";
+import BookSearch from "./books/BooksSearch";
+import HomePage from "./HomePage";
 
 function App() {
   return (
@@ -11,6 +13,9 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path={"/"}>
+            <HomePage />
+          </Route>
+          <Route exact path={"/customersSearch"}>
             <CustomersSearch />
           </Route>
           <Route path={"/addCustomer"}>
@@ -18,6 +23,9 @@ function App() {
           </Route>
           <Route path={"/addBook"}>
             <AddBook />
+          </Route>
+          <Route path={"/booksSearch"}>
+            <BookSearch />
           </Route>
           <Route path="*">
             <NotFound />

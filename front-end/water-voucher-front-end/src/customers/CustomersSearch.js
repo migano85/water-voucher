@@ -27,6 +27,7 @@ const CustomersSearch = () => {
 
   return (
     <div>
+      <Link to="/home">HOME</Link>
       <h2 className="title">Customers</h2>
       <form onSubmit={handleSubmit}>
         <table>
@@ -56,19 +57,19 @@ const CustomersSearch = () => {
               </td>
             </tr>
             <tr>
-              <td colSpan="2">
-                <button>search</button>
+              <td>
+                <button>SEARCH</button>
+              </td>
+              <td>
+                <Link className="linkAsButton" to="/addCustomer">
+                  ADD
+                </Link>
               </td>
             </tr>
           </tbody>
         </table>
       </form>
-      <Link className="linkAsButton" to="/addCustomer">
-        ADD
-      </Link>
-      <Link className="linkAsButton" to="/addBook">
-        ADD BOOK
-      </Link>
+
       {error && <div>{error}</div>}
       {isPending && <div>Loading...</div>}
       {resData && !customers && <CustomersSearchResult customers={resData} />}

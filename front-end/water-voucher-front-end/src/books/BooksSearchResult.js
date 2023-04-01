@@ -1,5 +1,4 @@
 import React from "react";
-import "./CustomersSearchResult.css";
 function BooksSearchResult({ books }) {
   return (
     <div>
@@ -10,9 +9,9 @@ function BooksSearchResult({ books }) {
             <td width={300}>customer name</td>
           </tr>
           {books.map((book) => (
-            <tr key={book.numberOfPages}>
-              <td>{customer.firstName}</td>
-              <td>{customer.lastName + " " + customer.lastName}</td>
+            <tr key={book.bookId}>
+              <td>{book.numberOfPages}</td>
+              <td>{book.customer.firstName + " " + book.customer.lastName}</td>
             </tr>
           ))}
         </tbody>
