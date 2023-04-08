@@ -34,6 +34,12 @@ public class BottleRepoJooqImpl implements IBottleRepo{
 	}
 
 	@Override
+	public void update(Bottle t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public Optional<Bottle> get(Long id) {
 		Condition condition = Tables.BOTTLES.BOTTLE_ID.eq(id);
 		

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.wv.jooq.model.Tables;
-import com.wv.jooq.model.tables.Books;
 import com.wv.model.Book;
 import com.wv.model.Voucher;
 
@@ -32,6 +31,12 @@ public class BookRepoJooqImpl implements IBookRepo{
 			.component1();
 		
 		book.setBookId(bookId);
+	}
+
+	@Override
+	public void update(Book t) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public int count() {

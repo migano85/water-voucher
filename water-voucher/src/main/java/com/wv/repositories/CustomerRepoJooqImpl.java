@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Records;
+import org.jooq.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -52,6 +53,31 @@ public class CustomerRepoJooqImpl implements ICustomerRepo{
 		customer.setCustomerId(customerId);
 	}
 	
+	public void persist(Customer customer){
+
+		Long customerId = 
+			dslContext.insertInto(Tables.CUSTOMERS, 
+						Tables.CUSTOMERS.FIRST_NAME, Tables.CUSTOMERS.LAST_NAME, Tables.CUSTOMERS.PHONE_NO, Tables.CUSTOMERS.CREATED_AT, Tables.CUSTOMERS.CREATED_BY, Tables.CUSTOMERS.MODIFIED_AT, Tables.CUSTOMERS.MODIFIED_BY)
+				.values(customer.getFirstName(), customer.getLastName(), customer.getPhoneNo(),customer.getCreatedAt(), customer.getCreatedBy(), customer.getModifiedAt(), customer.getModifiedBy())
+				.onDuplicateKeyUpdate()
+				.set(Tables.CUSTOMERS.FIRST_NAME, customer.getFirstName())
+				.set(Tables.CUSTOMERS.LAST_NAME, customer.getLastName())
+				.returningResult(Tables.CUSTOMERS.CUSTOMER_ID)
+				.fetchOne()
+				.getValue(Tables.CUSTOMERS.CUSTOMER_ID);//I can use .component1(); instead
+
+		customer.setCustomerId(customerId);
+	}
+	@Override
+	public void update(Customer customer) {
+		
+			dslContext.update(Tables.CUSTOMERS) 
+			.set(Tables.CUSTOMERS.FIRST_NAME, customer.getFirstName())
+			.set(Tables.CUSTOMERS.LAST_NAME, customer.getLastName())
+			.where(Tables.CUSTOMERS.CUSTOMER_ID.eq(customer.getCustomerId()))
+			.execute();
+	}
+
 	public int count() {
 		return dslContext.fetchCount(Tables.CUSTOMERS);
 	}

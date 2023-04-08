@@ -29,6 +29,12 @@ public class CustomerRepoJdbcImpl implements ICustomerRepo{
 //		log.info("start saving customer" + customer.getCustomerId());
 	}
 
+	@Override
+	public void update(Customer t) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public Integer count() {
 		return jdbcTemplate.queryForObject("select count(*) from customers", Integer.class);
 	}

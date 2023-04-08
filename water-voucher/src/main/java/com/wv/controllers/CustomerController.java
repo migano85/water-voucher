@@ -36,7 +36,7 @@ public class CustomerController implements IGlobalController<Customer>{
 	
 	@PostMapping("/customer")
 	public void save(@RequestBody Customer customer) {
-		repoJooqImpl.save(customer);
+		repoJooqImpl.persist(customer);
 	}
 	
 	@PostMapping("/search")
