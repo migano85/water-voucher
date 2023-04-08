@@ -6,6 +6,7 @@ import NotFound from "./NotFound";
 import AddBook from "./books/AddBook";
 import BookSearch from "./books/BooksSearch";
 import HomePage from "./HomePage";
+import EditCustomer from "./customers/EditCustomerUSINGspreadOperator";
 
 function App() {
   return (
@@ -15,11 +16,14 @@ function App() {
           <Route exact path={"/"}>
             <HomePage />
           </Route>
-          <Route exact path={"/customersSearch"}>
+          <Route path={"/customersSearch"}>
             <CustomersSearch />
           </Route>
           <Route path={"/addCustomer"}>
             <AddCustomer />
+          </Route>
+          <Route path={"/customers/:customerId"}>
+            <EditCustomer />
           </Route>
           <Route path={"/addBook"}>
             <AddBook />
