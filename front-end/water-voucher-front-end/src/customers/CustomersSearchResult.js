@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./CustomersSearchResult.css";
 import editImg from "../images/icons/edit-row-48.png";
 import trashImg from "../images/icons/trash-48.png";
@@ -21,9 +21,9 @@ function CustomersSearchResult({ customers }) {
               <td>{customer.lastName}</td>
               <td>{customer.phoneNo}</td>
               <td>
-                <NavLink to="/booksSearch">
+                <Link to={`/customers/${customer.customerId}`}>
                   <img src={editImg} />
-                </NavLink>
+                </Link>
               </td>
               <td>
                 <NavLink to="/booksSearch">
