@@ -9,6 +9,10 @@ const CustomersSearch = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [customers, setCustomers] = useState(null);
+  const [todos, setTodos] = useState([]);
+
+  const pageTitle = "page name";
+  const s = <div>hello div {pageTitle}</div>;
 
   const { error, isPending, resData } = useFetch(
     "http://localhost:8080/customers/all"
@@ -25,10 +29,19 @@ const CustomersSearch = () => {
       });
   };
 
+  const addTodo = () => {
+    setTodos((t) => [...t, "New Todo"]);
+  };
+
   return (
     <div>
-      <Link to="/home">HOME</Link>
-      <h2 className="title">Customers</h2>
+      <Link to="/">HOME</Link>
+      <h2 className="title">Customers - {s}</h2>
+      <div>
+        {todos.map((todo, index) => {
+          return <p key={index}>{todo}</p>;
+        })}
+      </div>
       <form onSubmit={handleSubmit}>
         <table>
           <tbody>
@@ -58,6 +71,7 @@ const CustomersSearch = () => {
             </tr>
             <tr>
               <td>
+                <button onClick={addTodo}> todo</button>
                 <button>SEARCH</button>
               </td>
               <td>

@@ -13,26 +13,27 @@ import com.wv.model.Book;
 import com.wv.model.Customer;
 
 @Repository
-public class CustomerRepoJdbcImpl implements ICustomerRepo{
+public class CustomerRepoJdbcImpl implements ICustomerRepo {
 
 	/*
-	 * this repository will be discovered automatically because it is in child package of where @SpringBootApplication exists (i.e com.wv). 
-	 * */
-	// Spring Boot will create and configure DataSource and JdbcTemplate based on application.properties
+	 * this repository will be discovered automatically because it is in child
+	 * package of where @SpringBootApplication exists (i.e com.wv).
+	 */
+	// Spring Boot will create and configure DataSource and JdbcTemplate based on
+	// application.properties
 	// To use it, just @Autowired
-	
+
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-	
+
 	@Override
 	public void save(Customer customer) {
-//		log.info("start saving customer" + customer.getCustomerId());
+		// log.info("start saving customer" + customer.getCustomerId());
 	}
 
 	@Override
 	public void update(Customer t) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	public Integer count() {
@@ -55,7 +56,7 @@ public class CustomerRepoJdbcImpl implements ICustomerRepo{
 	}
 
 	@Override
-	public void delete(Long id) {		
+	public void delete(Long id) {
 	}
 
 	@Override

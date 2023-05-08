@@ -11,68 +11,62 @@ import com.wv.jooq.model.Tables;
 import com.wv.model.Address;
 
 @Repository
-public class AddressRepoJooqImpl implements IAddressRepo{
+public class AddressRepoJooqImpl implements IAddressRepo {
 
 	@Autowired
-    private DSLContext dslContext;
-	
+	private DSLContext dslContext;
+
 	@Override
 	public void save(Address address) {
-		Long customerId = address.getCustomer() != null? address.getCustomer().getCustomerId() : null;
-		Long addressId = 
-			dslContext.insertInto(Tables.ADDRESSES,
-					Tables.ADDRESSES.CUSTOMER_ID, Tables.ADDRESSES.ZONE_NO, Tables.ADDRESSES.STREET_NO, Tables.ADDRESSES.BUILDING_NO, Tables.ADDRESSES.DESCRIPTION, Tables.ADDRESSES.CREATED_AT, Tables.ADDRESSES.CREATED_BY, Tables.ADDRESSES.MODIFIED_AT, Tables.ADDRESSES.MODIFIED_BY)
-			.values(customerId, address.getZoneNo(), address.getStreetNo(), address.getBuildingNo(), address.getDescription(), address.getCreatedAt(), address.getCreatedBy(), address.getModifiedAt(), address.getModifiedBy())
-			.returningResult(Tables.ADDRESSES.ADDRESS_ID)
-			.fetchOne()
-			.component1();
-		
+		Long customerId = address.getCustomer() != null ? address.getCustomer().getCustomerId() : null;
+		Long addressId = dslContext.insertInto(Tables.ADDRESSES,
+				Tables.ADDRESSES.CUSTOMER_ID, Tables.ADDRESSES.ZONE_NO, Tables.ADDRESSES.STREET_NO,
+				Tables.ADDRESSES.BUILDING_NO, Tables.ADDRESSES.DESCRIPTION, Tables.ADDRESSES.CREATED_AT,
+				Tables.ADDRESSES.CREATED_BY, Tables.ADDRESSES.MODIFIED_AT, Tables.ADDRESSES.MODIFIED_BY)
+				.values(customerId, address.getZoneNo(), address.getStreetNo(), address.getBuildingNo(),
+						address.getDescription(), address.getCreatedAt(), address.getCreatedBy(),
+						address.getModifiedAt(), address.getModifiedBy())
+				.returningResult(Tables.ADDRESSES.ADDRESS_ID)
+				.fetchOne()
+				.component1();
+
 		address.setAddressId(addressId);
 	}
 
 	@Override
 	public void update(Address t) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public Optional<Address> get(Long id) {
-		Address address = 
-				dslContext.select(Tables.ADDRESSES)
+		Address address = dslContext.select(Tables.ADDRESSES)
 				.from(Tables.ADDRESSES)
 				.where(Tables.ADDRESSES.ADDRESS_ID.eq(id))
 				.fetchOneInto(Address.class);
-				
+
 		return Optional.of(address);
 	}
 
 	@Override
 	public Collection<Address> getAll() {
-		
-		Collection<Address> addressList = 
-				dslContext.select(
-						Tables.ADDRESSES.ADDRESS_ID
-						,Tables.ADDRESSES.ZONE_NO
-						,Tables.ADDRESSES.STREET_NO
-						,Tables.ADDRESSES.BUILDING_NO
-						,Tables.ADDRESSES.CREATED_AT
-						,Tables.ADDRESSES.CREATED_BY
-						,Tables.ADDRESSES.MODIFIED_AT
-						,Tables.ADDRESSES.MODIFIED_BY
-						,Tables.ADDRESSES.customers().mapping(com.wv.jooq.model.tables.pojos.Customers::new).as("customers")
-				)
+
+		Collection<Address> addressList = dslContext.select(
+				Tables.ADDRESSES.ADDRESS_ID, Tables.ADDRESSES.ZONE_NO, Tables.ADDRESSES.STREET_NO,
+				Tables.ADDRESSES.BUILDING_NO, Tables.ADDRESSES.CREATED_AT, Tables.ADDRESSES.CREATED_BY,
+				Tables.ADDRESSES.MODIFIED_AT, Tables.ADDRESSES.MODIFIED_BY,
+				Tables.ADDRESSES.customers().mapping(com.wv.jooq.model.tables.pojos.Customers::new).as("customers"))
 				.from(Tables.ADDRESSES)
-				.fetch(r ->r.map(rec->new Address().setRecord(rec)));
-		
+				.fetch(r -> r.map(rec -> new Address().setRecord(rec)));
+
 		return addressList;
 	}
 
 	@Override
 	public void delete(Long id) {
 		dslContext.delete(Tables.ADDRESSES)
-			.where(Tables.ADDRESSES.ADDRESS_ID.eq(id))
-			.execute();
+				.where(Tables.ADDRESSES.ADDRESS_ID.eq(id))
+				.execute();
 	}
 
 }

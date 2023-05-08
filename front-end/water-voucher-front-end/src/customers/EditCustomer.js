@@ -3,18 +3,29 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 
-function EditCustomerUSINGspreadOperator(props) {
-  const { customerId: id } = useParams();
-  const [customer, setCustomer] = useState({});
-  // console.log(id);
+function EditCustomer(props) {
+  const { customerId: customerId } = useParams();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState(0);
+
   useEffect(() => {
-    axios.get("http://localhost:8080/customers/" + id).then((res) => {
-      setCustomer(res.data);
+    axios.get("http://localhost:8080/customers/" + customerId).then((res) => {
+      // setCustomer(res.data);
+      setFirstName(res.data.firstName);
+      setLastName(res.data.lastName);
     });
   }, []);
+
   const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
+    const customer = {
+      customerId,
+      firstName,
+      lastName,
+      phone,
+    };
 
     fetch("http://localhost:8080/customers/customer", {
       method: "POST",
@@ -45,21 +56,17 @@ function EditCustomerUSINGspreadOperator(props) {
           id="txtFirstName"
           type="text"
           required
-          value={customer.firstName}
-          onChange={(e) =>
-            setCustomer({ ...customer, firstName: e.target.value })
-          }
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
         />
         <label>Last name:</label>
         <input
           type="text"
           required
-          value={customer.lastName || "null value here"}
-          onChange={(e) =>
-            setCustomer({ ...customer, lastName: e.target.value })
-          }
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
         />
-        <button>Add Customer</button>
+        <button>Update Customer</button>
         <Link className="linkAsButton" to="/">
           Customers
         </Link>
@@ -68,4 +75,4 @@ function EditCustomerUSINGspreadOperator(props) {
   );
 }
 
-export default EditCustomerUSINGspreadOperator;
+export default EditCustomer;

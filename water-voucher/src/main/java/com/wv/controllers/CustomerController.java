@@ -17,33 +17,38 @@ import com.wv.repositories.CustomerRepoJooqImpl;
 
 @RestController
 @RequestMapping("/customers")
-public class CustomerController implements IGlobalController<Customer>{
+public class CustomerController implements IGlobalController<Customer> {
 
 	@Autowired
 	private CustomerRepoJooqImpl repoJooqImpl;
 	@Autowired
 	private CustomerRepoJdbcImpl repoJdbcImpl;
-	
+
 	@GetMapping("/all")
-	public Collection<Customer> getAll(){
+	public Collection<Customer> getAll() {
 		return repoJooqImpl.getAllWithBooks();
 	}
-	
+
 	@GetMapping("/count")
-	public int getCustomerCount(){
+	public int getCustomerCount() {
 		return repoJdbcImpl.count();
 	}
-	
+
 	@PostMapping("/customer")
 	public void save(@RequestBody Customer customer) {
-		repoJooqImpl.persist(customer);
+		if (customer.getCustomerId() == null) {
+			repoJooqImpl.save(customer);
+		} else {
+			repoJooqImpl.update(customer);
+		}
+		// repoJooqImpl.persist(customer);
 	}
-	
+
 	@PostMapping("/search")
 	public Collection<Customer> search(@RequestBody Customer customer) {
 		return repoJooqImpl.searchCustomerByCriteria(customer);
 	}
-	
+
 	@GetMapping("/{id}")
 	public Customer get(@PathVariable Long id) {
 		return repoJooqImpl.get(id).orElse(null);
@@ -53,6 +58,6 @@ public class CustomerController implements IGlobalController<Customer>{
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		repoJooqImpl.delete(id);
-		
+
 	}
 }

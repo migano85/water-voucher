@@ -6,7 +6,7 @@ import NotFound from "./NotFound";
 import AddBook from "./books/AddBook";
 import BookSearch from "./books/BooksSearch";
 import HomePage from "./HomePage";
-import EditCustomer from "./customers/EditCustomerUSINGspreadOperator";
+import EditCustomer from "./customers/EditCustomer";
 
 function App() {
   return (
