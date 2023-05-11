@@ -17,23 +17,27 @@ import com.wv.services.BookService;
 
 @RestController
 @RequestMapping("/books")
-public class BookController implements IGlobalController<Book>{
+public class BookController implements IGlobalController<Book> {
 
 	@Autowired
 	private BookRepoJooqImpl repoJooqImpl;
 	@Autowired
 	private BookService service;
-	
+
 	@GetMapping("/all")
-	public Collection<Book> getAll(){
+	public Collection<Book> getAll() {
 		return repoJooqImpl.getAll();
 	}
-	
+
 	@PostMapping("/book")
 	public void save(@RequestBody Book book) {
-		service.createBookWithVouchers(book);
+		if (book.getBookId() == null) {
+			service.createBookWithVouchers(book);
+		} else {
+			repoJooqImpl.update(book);
+		}
 	}
-	
+
 	@GetMapping("/{id}")
 	public Book get(@PathVariable Long id) {
 		return repoJooqImpl.get(id).orElse(null);
@@ -42,11 +46,11 @@ public class BookController implements IGlobalController<Book>{
 	@Override
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		repoJooqImpl.delete(id);		
+		repoJooqImpl.delete(id);
 	}
 
 	@GetMapping("/customerId={customerId}")
-	public Collection<Book> getBooksByCustomerId(@PathVariable Long customerId){
+	public Collection<Book> getBooksByCustomerId(@PathVariable Long customerId) {
 		return repoJooqImpl.getBooksByCustomerId(customerId);
 	}
 }

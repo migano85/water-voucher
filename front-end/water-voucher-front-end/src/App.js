@@ -7,6 +7,7 @@ import AddBook from "./books/AddBook";
 import BookSearch from "./books/BooksSearch";
 import HomePage from "./HomePage";
 import EditCustomer from "./customers/EditCustomer";
+import EditBook from "./books/EditBook";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
           </Route>
           <Route path={"/booksSearch"}>
             <BookSearch />
+          </Route>
+          <Route path={"/books/:currentBookId"}>
+            <EditBook />
           </Route>
           <Route path="*">
             <NotFound />

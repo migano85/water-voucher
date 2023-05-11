@@ -35,8 +35,12 @@ public class BookRepoJooqImpl implements IBookRepo {
 	}
 
 	@Override
-	public void update(Book t) {
-
+	public void update(Book book) {
+		dslContext.update(Tables.BOOKS)
+				.set(Tables.BOOKS.NUMBER_OF_PAGES, book.getNumberOfPages())
+				.set(Tables.BOOKS.CUSTOMER_ID, book.getCustomerId())
+				.where(Tables.BOOKS.BOOK_ID.eq(book.getBookId()))
+				.execute();
 	}
 
 	public int count() {

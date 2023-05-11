@@ -1,25 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import Select from "react-select";
 import "./AddBook.css";
 import axios from "axios";
 
-const AddBook = () => {
+const EditBook = () => {
   const history = useHistory();
+  const { currentBookId: bookId } = useParams();
   const [selectedOption, selectedOptionCallback] = useState();
   const [numberOfPages, setNoOfPagesValue] = useState(0);
   const [customerId, setCustomerId] = useState(0);
   const [allCustomers, setAllCustomers] = useState(null);
 
   useEffect(() => {
-    //useEffect is used because I don't want to populate the LOV on evry state or props change
+    //useEffect is used because I don't want to populate the LOV on every state or props change
     axios.get("http://localhost:8080/customers/all").then((res) => {
       //axios is used because useFetch cannot be inside useEffect
       setAllCustomers(res.data);
     });
   }, []);
 
-  // const { error, isPending, resData } = useFetch(
+  useEffect(() => {
+    //useEffect is used because I don't want to populate the LOV on every state or props change
+    axios.get("http://localhost:8080/books/" + bookId).then((res) => {
+      //axios is used because useFetch cannot be inside useEffect
+      setNoOfPagesValue(res.data.numberOfPages);
+      setCustomerId(res.data.customerId);
+    });
+  }, [bookId]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/customers/" + customerId).then((res) => {
+      selectedOptionCallback(res.data);
+      setCustomerId(res.data.customerId);
+    });
+  }, [customerId]);
+  // const { /*error, isPending,*/ resData } = useFetch(
   //   "http://localhost:8080/customers/all"
   // );
 
@@ -32,6 +48,7 @@ const AddBook = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const book = {
+      bookId,
       numberOfPages,
       customerId,
     };
@@ -93,6 +110,7 @@ const AddBook = () => {
                 <input
                   id="txtPagesNo"
                   type="text"
+                  value={numberOfPages}
                   placeholder="enter number of pages"
                   onChange={(e) => setNoOfPagesValue(e.target.value)}
                   required
@@ -130,4 +148,4 @@ const AddBook = () => {
   );
 };
 
-export default AddBook;
+export default EditBook;

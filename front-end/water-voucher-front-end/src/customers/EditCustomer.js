@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 
 function EditCustomer(props) {
-  const { customerId: customerId } = useParams();
+  const { customerId } = useParams();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState(0);
@@ -15,7 +15,7 @@ function EditCustomer(props) {
       setFirstName(res.data.firstName);
       setLastName(res.data.lastName);
     });
-  }, []);
+  }, [customerId]);
 
   const history = useHistory();
   const handleSubmit = (e) => {

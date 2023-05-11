@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 function AddCustomer(props) {

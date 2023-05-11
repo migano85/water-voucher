@@ -36,13 +36,7 @@ const BookSearch = () => {
     //   console.log(customerId, "custId");
     // }
   }
-  // useEffect(() => {
-  //   console.log(selectedOption, "slectedOption");
-  //   if (selectedOption != null) {
-  //     setCustomerIdValue(selectedOption.customerId);
-  //     console.log(customerId, "custId");
-  //   }
-  // }, [selectedOption]);
+
   return (
     <div>
       <h2 className="title">Books</h2>
