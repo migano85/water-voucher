@@ -35,7 +35,7 @@ public class BottleController implements IGlobalController<Bottle> {
 
 	@PostMapping("/search")
 	public Collection<Bottle> search(@RequestBody Bottle bottle) {
-		repoJooqImpl.searchBottlesByCriteria(bottle);
+		return repoJooqImpl.searchBottlesByCriteria(bottle);
 	}
 
 	@Override
