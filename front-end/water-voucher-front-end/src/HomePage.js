@@ -9,6 +9,9 @@ const HomePage = () => {
       <Link className="linkAsButton" to="/booksSearch">
         BOOKS
       </Link>
+      <Link className="linkAsButton" to="/bottlesSearch">
+        BOTTLES
+      </Link>
     </div>
   );
 };

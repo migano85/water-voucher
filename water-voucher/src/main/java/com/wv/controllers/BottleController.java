@@ -16,23 +16,28 @@ import com.wv.repositories.BottleRepoJooqImpl;
 
 @RestController
 @RequestMapping("/bottles")
-public class BottleController implements IGlobalController<Bottle>{
+public class BottleController implements IGlobalController<Bottle> {
 
 	@Autowired
 	private BottleRepoJooqImpl repoJooqImpl;
-	
+
 	@Override
 	@GetMapping("/all")
-	public Collection<Bottle> getAll(){
+	public Collection<Bottle> getAll() {
 		return repoJooqImpl.getAll();
 	}
-	
+
 	@Override
 	@PostMapping("/bottle")
 	public void save(@RequestBody Bottle bottle) {
 		repoJooqImpl.save(bottle);
 	}
-	
+
+	@PostMapping("/search")
+	public Collection<Bottle> search(@RequestBody Bottle bottle) {
+		repoJooqImpl.searchBottlesByCriteria(bottle);
+	}
+
 	@Override
 	@GetMapping("/{id}")
 	public Bottle get(@PathVariable Long id) {
@@ -42,6 +47,6 @@ public class BottleController implements IGlobalController<Bottle>{
 	@Override
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		repoJooqImpl.delete(id);		
+		repoJooqImpl.delete(id);
 	}
 }

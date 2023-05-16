@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-function AddCustomer(props) {
+function AddCustomer() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState(0);

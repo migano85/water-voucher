@@ -5,4 +5,6 @@ Install extension(vscode)– Reactjs code snippets (charalampos karypidis)
 rcc-> == class component skeleton.
 rsc-> == stateless component skeleton.
 rsf-> == stateless named function skeleton.
-​
+
+--------------------------------------------
+cntrl + T == search for classes and Types in VS code

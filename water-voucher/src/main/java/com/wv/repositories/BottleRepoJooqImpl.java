@@ -1,5 +1,6 @@
 package com.wv.repositories;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class BottleRepoJooqImpl implements IBottleRepo {
 				Tables.BOTTLES.CREATED_BY, Tables.BOTTLES.MODIFIED_AT, Tables.BOTTLES.MODIFIED_BY)
 				.values(bottle.getSize(), bottle.getSerialNumber(), bottle.getFilled(), bottle.getCreatedAt(),
 						bottle.getCreatedBy(), bottle.getModifiedAt(), bottle.getModifiedBy())
-				.returningResult(Tables.ADDRESSES.ADDRESS_ID)
+				.returningResult(Tables.BOTTLES.BOTTLE_ID)
 				.fetchOne()
 				.component1();
 
@@ -66,5 +67,19 @@ public class BottleRepoJooqImpl implements IBottleRepo {
 		dslContext.delete(Tables.BOTTLES)
 				.where(Tables.BOTTLES.BOTTLE_ID.eq(id))
 				.execute();
+	}
+
+	@Override
+	public List<Bottle> searchBottlesByCriteria(Bottle bottle) {
+		ArrayList<Condition> conditions = new ArrayList<>();
+		if (bottle != null) {
+			if (bottle.getSerialNumber() != null && bottle.getSerialNumber().isEmpty()) {
+				conditions.add(Tables.BOTTLES.SERIAL_NUMBER.equalIgnoreCase(bottle.getSerialNumber()));
+			}
+		}
+
+		return dslContext.selectFrom(Tables.BOTTLES)
+				.where(conditions)
+				.fetchInto(Bottle.class);
 	}
 }

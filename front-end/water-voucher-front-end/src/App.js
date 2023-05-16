@@ -8,6 +8,8 @@ import BookSearch from "./books/BooksSearch";
 import HomePage from "./HomePage";
 import EditCustomer from "./customers/EditCustomer";
 import EditBook from "./books/EditBook";
+import BottlesSearch from "./bottles/BottlesSearch";
+import AddBottle from "./bottles/AddBottle";
 
 function App() {
   return (
@@ -34,6 +36,12 @@ function App() {
           </Route>
           <Route path={"/books/:currentBookId"}>
             <EditBook />
+          </Route>
+          <Route path={"/bottlesSearch"}>
+            <BottlesSearch />
+          </Route>
+          <Route path={"/addBottle"}>
+            <AddBottle />
           </Route>
           <Route path="*">
             <NotFound />

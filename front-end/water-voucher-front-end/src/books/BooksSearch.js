@@ -20,11 +20,17 @@ const BookSearch = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios
-      .get("http://localhost:8080/books/customerId=" + customerId)
-      .then((res) => {
+    if (customerId != null) {
+      axios
+        .get("http://localhost:8080/books/customerId=" + customerId)
+        .then((res) => {
+          setBooks(res.data);
+        });
+    } else {
+      axios.get("http://localhost:8080/books/all").then((res) => {
         setBooks(res.data);
       });
+    }
   };
 
   function handleSelect(selectedValue) {
@@ -39,6 +45,7 @@ const BookSearch = () => {
 
   return (
     <div>
+      <Link to="/">HOME</Link>
       <h2 className="title">Books</h2>
       <form onSubmit={handleSubmit}>
         <table>
