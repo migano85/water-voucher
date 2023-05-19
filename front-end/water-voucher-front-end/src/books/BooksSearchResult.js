@@ -6,7 +6,6 @@ import axios from "axios";
 
 function BooksSearchResult({ books }) {
   const handleDelete = (id) => {
-    alert(id);
     // DELETE request using axios with error handling
     axios
       .delete("http://localhost:8080/customers/" + id)
@@ -29,6 +28,7 @@ function BooksSearchResult({ books }) {
             <td width={300}>customer name</td>
             <td>Edit</td>
             <td>Delete</td>
+            <td>vouchers</td>
           </tr>
           {books.map((book) => (
             <tr key={book.bookId}>
@@ -45,6 +45,9 @@ function BooksSearchResult({ books }) {
                   alt="delete"
                   onClick={(e) => handleDelete(book.bookId)}
                 />
+              </td>
+              <td>
+                <Link to={`/vouchers?bookId=${book.bookId}`}>voucher</Link>
               </td>
             </tr>
           ))}

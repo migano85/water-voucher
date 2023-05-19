@@ -102,8 +102,11 @@ public class BookRepoJooqImpl implements IBookRepo {
 	}
 
 	@Override
-	public Voucher getBookVoucher(Long voucherId) {
-		return null;
+	public Collection<Voucher> getBookVouchers(Long bookId) {
+		return dslContext.select(Tables.VOUCHERS.VOUCHER_ID, Tables.VOUCHERS.VOUCHER_SERIAL)
+				.from(Tables.VOUCHERS)
+				.where(Tables.VOUCHERS.BOOK_ID.eq(bookId))
+				.fetchInto(Voucher.class);
 	}
 
 	@Override

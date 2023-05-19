@@ -10,6 +10,7 @@ import EditCustomer from "./customers/EditCustomer";
 import EditBook from "./books/EditBook";
 import BottlesSearch from "./bottles/BottlesSearch";
 import AddBottle from "./bottles/AddBottle";
+import BookVouchers from "./books/BookVouchers";
 
 function App() {
   return (
@@ -42,6 +43,9 @@ function App() {
           </Route>
           <Route path={"/addBottle"}>
             <AddBottle />
+          </Route>
+          <Route path={"/vouchers"}>
+            <BookVouchers />
           </Route>
           <Route path="*">
             <NotFound />

@@ -1,12 +1,14 @@
 import axios from "axios";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import useFetch from "../useFetch";
 import { Link } from "react-router-dom";
 import BottlesSearchResult from "./BottlesSearchResult";
 
+export const BottlesContext = createContext();
+
 function BottlesSearch() {
   const [bottles, setBottles] = useState(null);
-  const [serialNumber, setSerialNumber] = useState();
+  const [serialNumber, setSerialNumber] = useState("");
 
   const { error, isPending, resData } = useFetch(
     "http://localhost:8080/bottles/all"
@@ -14,7 +16,6 @@ function BottlesSearch() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const bottleCriteria = { serialNumber };
 
     axios
       .post("http://localhost:8080/bottles/search", { serialNumber })
@@ -59,8 +60,13 @@ function BottlesSearch() {
 
       {error && <div>{error}</div>}
       {isPending && <div>Loading...</div>}
-      {resData && !bottles && <BottlesSearchResult bottles={resData} />}
-      {bottles && <BottlesSearchResult bottles={bottles} />}
+
+      {resData && !bottles && (
+        <BottlesSearchResult bottlesFromUseFetch={resData} />
+      )}
+      <BottlesContext.Provider value={bottles}>
+        {bottles && <BottlesSearchResult />}
+      </BottlesContext.Provider>
     </div>
   );
 }

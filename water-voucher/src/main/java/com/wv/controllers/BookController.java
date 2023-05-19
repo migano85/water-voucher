@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wv.model.Book;
+import com.wv.model.Voucher;
 import com.wv.repositories.BookRepoJooqImpl;
 import com.wv.services.BookService;
 
@@ -52,5 +53,10 @@ public class BookController implements IGlobalController<Book> {
 	@GetMapping("/customerId={customerId}")
 	public Collection<Book> getBooksByCustomerId(@PathVariable Long customerId) {
 		return repoJooqImpl.getBooksByCustomerId(customerId);
+	}
+
+	@GetMapping("/vouchers/bookId={bookId}")
+	public Collection<Voucher> getBookVouchers(@PathVariable Long bookId) {
+		return repoJooqImpl.getBookVouchers(bookId);
 	}
 }

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import editImg from "../images/icons/edit-row-48.png";
 import trashImg from "../images/icons/trash-48.png";
 import axios from "axios";
+import { BottlesContext } from "./BottlesSearch";
 
-const BottlesSearchResult = ({ bottles }) => {
+const BottlesSearchResult = ({ bottlesFromUseFetch }) => {
+  let bottles = useContext(BottlesContext);
+  bottles = bottles != null ? bottles : bottlesFromUseFetch;
   const handleDelete = (id) => {
     alert(id);
     // DELETE request using axios with error handling
@@ -30,25 +33,26 @@ const BottlesSearchResult = ({ bottles }) => {
             <td>Edit</td>
             <td>Delete</td>
           </tr>
-          {bottles.map((bottle) => (
-            <tr key={bottle.bottleId}>
-              <td>{bottle.serialNumber}</td>
-              <td>{bottle.size}</td>
-              <td></td>
-              <td>
-                <Link to={`/bottles/${bottle.bottleId}`}>
-                  <img src={editImg} alt="edit" />
-                </Link>
-              </td>
-              <td>
-                <img
-                  src={trashImg}
-                  alt="delete"
-                  onClick={(e) => handleDelete(bottle.bottleId)}
-                />
-              </td>
-            </tr>
-          ))}
+          {bottles &&
+            bottles.map((bottle) => (
+              <tr key={bottle.bottleId}>
+                <td>{bottle.serialNumber}</td>
+                <td>{bottle.size}</td>
+                <td>{bottle.filled != null ? bottle.filled.toString() : ""}</td>
+                <td>
+                  <Link to={`/bottles/${bottle.bottleId}`}>
+                    <img src={editImg} alt="edit" />
+                  </Link>
+                </td>
+                <td>
+                  <img
+                    src={trashImg}
+                    alt="delete"
+                    onClick={(e) => handleDelete(bottle.bottleId)}
+                  />
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

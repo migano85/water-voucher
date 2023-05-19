@@ -73,7 +73,7 @@ public class BottleRepoJooqImpl implements IBottleRepo {
 	public List<Bottle> searchBottlesByCriteria(Bottle bottle) {
 		ArrayList<Condition> conditions = new ArrayList<>();
 		if (bottle != null) {
-			if (bottle.getSerialNumber() != null && bottle.getSerialNumber().isEmpty()) {
+			if (bottle.getSerialNumber() != null && !bottle.getSerialNumber().isEmpty()) {
 				conditions.add(Tables.BOTTLES.SERIAL_NUMBER.equalIgnoreCase(bottle.getSerialNumber()));
 			}
 		}
