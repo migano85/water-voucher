@@ -7,7 +7,7 @@ import BottlesSearchResult from "./BottlesSearchResult";
 export const BottlesContext = createContext();
 
 function BottlesSearch() {
-  const [bottles, setBottles] = useState(null);
+  const [bottles, setBottles] = useState([]);
   const [serialNumber, setSerialNumber] = useState("");
 
   const { error, isPending, resData } = useFetch(

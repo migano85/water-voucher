@@ -6,5 +6,8 @@ rcc-> == class component skeleton.
 rsc-> == stateless component skeleton.
 rsf-> == stateless named function skeleton.
 
+for next command to work we need to install es7 + react/redux/reactNative extension from vsCode store
+rafce-> == stateless component skeleton. (with function name taken from file name)
+
 --------------------------------------------
 cntrl + T == search for classes and Types in VS code

@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 const BookSearch = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [customerId, setCustomerIdValue] = useState();
-  const [books, setBooks] = useState();
-  const [customers, setCustomers] = useState();
+  const [books, setBooks] = useState([]);
+  const [customers, setCustomers] = useState([]);
 
   //onComponentMount - first time
   useEffect(() => {

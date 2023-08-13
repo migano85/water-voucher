@@ -28,6 +28,25 @@ public class WaterVoucherApplication {
 	}
 
 	/*
+	 * the following corsGlobalConfiguerer() is a method that has a return type as
+	 * NON functional interface, therefore the return of the method can be only an
+	 * in-line interface implementation
+	 * for better example check classWithMain.java and see public static
+	 * Comparator<String> compMethod()
+	 */
+
+	// @Bean
+	// public WebMvcConfigurer corsGlobalConfiguerer() {// this method is used to
+	// overcome CORS security check
+
+	// return new WebMvcConfigurer() {
+	// @Override
+	// public void addCorsMappings(CorsRegistry registry) {
+	// registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+	// }
+	// };
+	// }
+	/*
 	 * the following printEnvVars() is a method that has a return type as functional
 	 * interface, therefore the return of the method can be lambda
 	 * for better example check classWithMain.java and see public static
@@ -54,25 +73,6 @@ public class WaterVoucherApplication {
 	// // bookRepoJooqImpl.getAll();
 	// };
 	// }
-
-	/*
-	 * the following corsGlobalConfiguerer() is a method that has a return type as
-	 * NON functional interface, therefore the return of the method can be only an
-	 * in-line interface implementation
-	 * for better example check classWithMain.java and see public static
-	 * Comparator<String> compMethod()
-	 */
-
-	@Bean
-	public WebMvcConfigurer corsGlobalConfiguerer() {// this method is used to overcome CORS security check
-
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:3000");
-			}
-		};
-	}
 
 	// @Override
 	// public void run(String... args) throws Exception {
