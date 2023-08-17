@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  //<React.StrictMode> make useEffect fire twice in development mode but twice in production mode
+  //<React.StrictMode> make useEffect fire twice in development mode but once in production mode
   <React.StrictMode>
     <App />
   </React.StrictMode>
