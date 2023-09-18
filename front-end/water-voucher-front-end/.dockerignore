@@ -1,0 +1,4 @@
+#all files names menetioned in this files will be ignored by dockerfile during
+# copying everything from source to destination using -> COPY . .
+node_modules
+Dockerfile
