@@ -12,9 +12,10 @@ const CustomersSearch = () => {
 
   const pageTitle = "page name";
   const s = <div>hello div {pageTitle}</div>;
+  console.log(`${process.env.REACT_APP_ROOT_URL}`, "env URL");
 
   const { error, isPending, resData } = useFetch(
-    "http://localhost:8080/customers/all"
+    `${process.env.REACT_APP_ROOT_URL}/customers/all`
   );
 
   const handleSubmit = (e) => {
@@ -22,7 +23,10 @@ const CustomersSearch = () => {
     const customerCriteria = { firstName, lastName };
 
     axios
-      .post("http://localhost:8080/customers/search", customerCriteria)
+      .post(
+        `${process.env.REACT_APP_ROOT_URL}/customers/search`,
+        customerCriteria
+      )
       .then((res) => {
         setCustomers(res.data);
       });

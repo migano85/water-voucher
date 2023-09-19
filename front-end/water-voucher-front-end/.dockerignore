@@ -2,3 +2,4 @@
 # copying everything from source to destination using -> COPY . .
 node_modules
 Dockerfile
+#npm-debug.log*
