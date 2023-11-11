@@ -16,7 +16,7 @@ services:
     volumes:
       - D:/docker-mysql-data:/var/lib/mysql
 
-  water-voucher:
+  water-voucher-api:
     #service 2 run docker file of water voucher
     image: migano/water-voucher-image
     container_name: water-voucher-app
@@ -28,15 +28,11 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlDB:3306/wv?allowMultiQueries=true&createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      - MYSQL_HOST=mysqlDB
-      - MYSQL_PASSWORD=root
-      - MYSQL_PORT=3306 #3307 is exposed of external connection, but as wv app and mySQlDB reside in the same network inside docker i will connect to DB using the default 3306
       - MYSQL_URL=jdbc:mysql://mysqlDB:3306/wv #inside docker mysql port is 3306 not 3307
-      - MYSQL_USER=root
     ports:
-      - "8081:8080"
+      - "8080:8080"
     depends_on:
-      - db
+      - db # db service should start before water-voucher service
 
 networks: #if the network tag is omitted in both water-voucher-app and mysqlDB containers, then this network will not be created and they will be assigned to a default netwrok of them, and they connect to each other, but as a good practice it's better to create the network and name it yourself, better then getting an arbitrary network created when executing docker-compose up -d
   myNetwork:
