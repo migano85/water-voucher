@@ -25,6 +25,7 @@ services:
     networks:
       - myNetwork
     environment: #environment can be key:value as above in db or as a list like here
+      # enviroment viriables takes precedence over what is written in application.properties, check this post: https://stackoverflow.com/questions/46057625/externalising-spring-boot-properties-when-deploying-to-docker
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlDB:3306/wv?allowMultiQueries=true&createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
