@@ -1,15 +1,12 @@
 version: "3.8"
 services:
-  frontend:
-    image: migano/react-img1
-    container_name: react-container1
+  react:
     build:
-      dockerfile: Dockerfile # we can specify only folder name and docker compose will look for Dockerfile inside it. (i.e. check water-voucher section for an example)
-    networks:
-      - myNetwork
+      context: .
+      dockerfile: react.Dockerfile
+      args:
+        #Passing .env variable to Dockerfile ARG
+        - ROOT_URL=${REACT_APP_ROOT_URL}
+    container_name: react
     ports:
-      - 3000:3000
-networks: #if the network tag is omitted in both water-voucher-app and mysqlDB containers, then this network will not be created and they will be assigned to a default netwrok of them, and they connect to each other, but as a good practice it's better to create the network and name it yourself, better then getting an arbitrary network created when executing docker-compose up -d
-  myNetwork:
-    name: water-voucher-net
-    driver: bridge
+      - 80:80

@@ -3,7 +3,7 @@ services:
   db:
     # service 1 create database
     image: mysql
-    container_name: mysqlDB
+    container_name: mysqlDB-react
     restart: unless-stopped
     networks: #if we omit network then both of them will be inside the same default network because we created both container using one compose file, but if we created them using CMD then we have to associate them to the same network manually
       - myNetwork
@@ -12,30 +12,30 @@ services:
       MYSQL_DATABASE: wv
 
     ports:
-      - "3307:3306"
+      - "3308:3306"
     volumes:
-      - D:/docker-mysql-data:/var/lib/mysql
+      - D:/docker-mysql-data-react:/var/lib/mysql
 
   water-voucher-api:
     #service 2 run docker file of water voucher
     image: migano/water-voucher-image
-    container_name: water-voucher-app
+    container_name: water-voucher-app-react
     build:
-      dockerfile: Dockerfile
+      dockerfile: water-voucher/Dockerfile
     networks:
       - myNetwork
     environment: #environment can be key:value as above in db or as a list like here
       # enviroment viriables takes precedence over what is written in application.properties, check this post: https://stackoverflow.com/questions/46057625/externalising-spring-boot-properties-when-deploying-to-docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlDB:3306/wv?allowMultiQueries=true&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlDB-react:3306/wv?allowMultiQueries=true&createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      - MYSQL_URL=jdbc:mysql://mysqlDB:3306/wv #inside docker mysql port is 3306 not 3307
+      - MYSQL_URL=jdbc:mysql://mysqlDB-react:3306/wv #inside docker mysql port is 3306 not 3307
     ports:
-      - "8081:8080"
+      - "8082:8080"
     depends_on:
       - db # db service should start before water-voucher service
 
 networks: #if the network tag is omitted in both water-voucher-app and mysqlDB containers, then this network will not be created and they will be assigned to a default netwrok of them, and they connect to each other, but as a good practice it's better to create the network and name it yourself, better then getting an arbitrary network created when executing docker-compose up -d
   myNetwork:
-    name: water-voucher-net
+    name: water-voucher-net-react
     driver: bridge
