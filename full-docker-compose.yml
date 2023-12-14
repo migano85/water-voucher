@@ -1,0 +1,53 @@
+version: "3.8"
+services:
+  # db:
+  #   # service 1 create database
+  #   image: mysql
+  #   container_name: mysqlDB
+  #   restart: unless-stopped
+  #   networks: #if we omit network then both of them will be inside the same default network because we created both container using one compose file, but if we created them using CMD then we have to associate them to the same network manually
+  #     - myNetwork
+  #   environment: #environment can be a list as bellow in water-voucher or as a key:value like here
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: wv
+
+  #   ports:
+  #     - "3308:3306"
+  #   volumes:
+  #     - D:/docker-mysql-data:/var/lib/mysql
+
+  # water-voucher-api:
+  #   #service 2 run docker file of water voucher
+  #   image: migano/water-voucher-image
+  #   container_name: water-voucher-app
+  #   build:
+  #     context: water-voucher
+  #     dockerfile: Dockerfile
+  #   networks:
+  #     - myNetwork
+  #   environment: #environment can be key:value as above in db or as a list like here
+  #     # enviroment viriables takes precedence over what is written in application.properties, check this post: https://stackoverflow.com/questions/46057625/externalising-spring-boot-properties-when-deploying-to-docker
+  #     - SPRING_DATASOURCE_URL=jdbc:mysql://mysqlDB:3306/wv?allowMultiQueries=true&createDatabaseIfNotExist=true
+  #     - SPRING_DATASOURCE_USERNAME=root
+  #     - SPRING_DATASOURCE_PASSWORD=root
+  #     - MYSQL_URL=jdbc:mysql://mysqlDB:3306/wv #inside docker mysql port is 3306 not 3307
+  #   ports:
+  #     - "8083:8080"
+  #   depends_on:
+  #     - db # db service should start before water-voucher service
+  react:
+    build:
+      context: front-end/water-voucher-front-end
+      dockerfile: react.Dockerfile
+      args:
+        #Passing .env variable to Dockerfile ARG
+        # sometimes this setting the value of ARG in the next line, does not take effect, this usually happens when docker use cached image eeven if we delete it.
+        # if docker used cached image to recreate the image again even if we have build in docker-compose, and therefore if we change the value here it will not take effect, to solve this problem we execute system prune before executing docker compose again
+        - ROOT_URL_ARG=${ROOT_URL}
+    container_name: react
+    ports:
+      - 3000:80
+networks: #if the network tag is omitted in both water-voucher-app and mysqlDB containers, then this network will not be created and they will be assigned to a default netwrok of them, and they connect to each other, but as a good practice it's better to create the network and name it yourself, better then getting an arbitrary network created when executing docker-compose up -d
+  myNetwork:
+    name: water-voucher-net
+    driver: bridge

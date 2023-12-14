@@ -5,8 +5,7 @@ services:
       context: .
       dockerfile: react.Dockerfile
       args:
-        #Passing .env variable to Dockerfile ARG
-        - ROOT_URL=${REACT_APP_ROOT_URL}
+        - ROOT_URL_ARG=${ROOT_URL}
     container_name: react
     ports:
-      - 80:80
+      - 3000:80
