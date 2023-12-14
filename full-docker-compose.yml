@@ -5,7 +5,7 @@ services:
     image: mysql
     container_name: mysqlDB
     restart: unless-stopped
-    networks: #if we omit network then both of them will be inside the same default network because we created both container using one compose file, but if we created them using CMD then we have to associate them to the same network manually
+    networks: #if we omit network then all of them will be inside the same default network because we created both container using one compose file, but if we created them using CMD then we have to associate them to the same network manually
       - myNetwork
     environment: #environment can be a list as bellow in water-voucher or as a key:value like here
       MYSQL_ROOT_PASSWORD: root
@@ -45,9 +45,12 @@ services:
         # if docker used cached image to recreate the image again even if we have build in docker-compose, and therefore if we change the value here it will not take effect, to solve this problem we execute system prune before executing docker compose again
         - ROOT_URL_ARG=${ROOT_URL}
     container_name: react
+    networks: #if we omit network then all of them will be inside the same default network because we created both container using one compose file, but if we created them using CMD then we have to associate them to the same network manually
+      - myNetwork
     ports:
+      # i mapped to 3000 to overcome http CORS exception
       - 3000:80
-networks: #if the network tag is omitted in both water-voucher-app and mysqlDB containers, then this network will not be created and they will be assigned to a default netwrok of them, and they connect to each other, but as a good practice it's better to create the network and name it yourself, better then getting an arbitrary network created when executing docker-compose up -d
+networks: #if the network tag is omitted in all containers, then this network will not be created and they will be assigned to a default netwrok of them, and they connect to each other, but as a good practice it's better to create the network and name it yourself, better then getting an arbitrary network created when executing docker-compose up -d
   myNetwork:
     name: water-voucher-net
     driver: bridge
