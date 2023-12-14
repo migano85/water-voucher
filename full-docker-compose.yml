@@ -36,6 +36,8 @@ services:
     depends_on:
       - db # db service should start before water-voucher service
   react:
+    image: migano/react-img
+    container_name: react
     build:
       context: front-end/water-voucher-front-end
       dockerfile: react.Dockerfile
@@ -44,7 +46,6 @@ services:
         # sometimes this setting the value of ARG in the next line, does not take effect, this usually happens when docker use cached image eeven if we delete it.
         # if docker used cached image to recreate the image again even if we have build in docker-compose, and therefore if we change the value here it will not take effect, to solve this problem we execute system prune before executing docker compose again
         - ROOT_URL_ARG=${ROOT_URL}
-    container_name: react
     networks: #if we omit network then all of them will be inside the same default network because we created both container using one compose file, but if we created them using CMD then we have to associate them to the same network manually
       - myNetwork
     ports:
