@@ -11,3 +11,23 @@
   font-weight: bold;
   line-height: 20px;
 }
+
+.linkAsFancyText {
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  color: black;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.gridAsCard {
+  box-shadow: "3";
+  flex-grow: "1";
+  text-align: "center";
+  /* text-decoration: none;
+  color: black; */
+  margin-right: "10px";
+  background-color: "#DDDFFD";
+}
